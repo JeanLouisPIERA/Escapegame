@@ -1,0 +1,6 @@
+#Minimal gitignore
+
+.idea/
+out/
+*.iml
+target/
