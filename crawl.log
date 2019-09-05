@@ -1,0 +1,52 @@
+INFO	2019-09-05 17:45:33,718	0	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Ami Joueur, Bonjour ! 
+ Bienvenue dans ce nouvel Escape Game. Dis moi, quel est ton nom ?
+INFO	2019-09-05 17:45:39,345	5627	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	C'est noté. Je te remercie Pimpon! 
+ Dans ce jeu, l'ordinateur ou toi, vous devrez découvrir une combinaison secrète de plusieurs chiffres. 
+ Dis moi tu veux que cette combinaison contienne combien de chiffres ?
+INFO	2019-09-05 17:45:39,345	5627	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Attention, pense à entrer un nombre entier positif ...
+ERROR	2019-09-05 17:50:29,288	295570	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	 La saisie du nombre de combinaisons n'est pas correcte. On recommance à zéro ...
+INFO	2019-09-05 17:50:29,288	295570	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Attention, pense à entrer un nombre entier positif ...
+ERROR	2019-09-05 17:50:31,318	297600	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	 La saisie du nombre de combinaisons n'est pas correcte. On recommance à zéro ...
+INFO	2019-09-05 17:50:31,320	297602	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Attention, pense à entrer un nombre entier positif ...
+INFO	2019-09-05 17:50:43,895	310177	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Parfait. Pour connaitre le nombre de combinaisons possibles, multiplie 10 par lui même autant de fois que tu as choisi de chiffres dans ta combinaison
+INFO	2019-09-05 17:50:43,895	310177	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Maintenant, entre l'ordinateur et toi, à la fin, il ne peut en rester qu'un. 
+ Voici les modes de Jeu qui s'offrent à toi :
+INFO	2019-09-05 17:50:43,895	310177	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Choix N°1 - Mode CHALLENGER : c'est l'ordinateur qui choisit la combinaison. A toi de la découvrir en un nombre de coups limités
+INFO	2019-09-05 17:50:43,895	310177	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Choix N°2 - Mode DEFENSEUR : c'est toi qui choisit la combinaison et l'ordinateur qui attaque dans un nombre de coups limités
+INFO	2019-09-05 17:50:43,895	310177	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Choix N°3 - Mode DUEL : l'ordinateur et toi vous choisissez vos combinaisons et attaquez à tour de rôle
+INFO	2019-09-05 17:50:43,895	310177	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Alors Ami Pimpon, quelle est ta décision ? Ecris ici le numéro de ton choix :
+INFO	2019-09-05 17:50:43,895	310177	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Attention, pense à entrer un nombre entier positif ...
+ERROR	2019-09-05 17:50:48,823	315105	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	La saisie du nombre du mode de jeu n'est pas correcte. Il faut recommencer ...
+INFO	2019-09-05 17:50:48,823	315105	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Attention, pense à entrer un nombre entier positif ...
+INFO	2019-09-05 17:50:50,544	316826	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Ne réponds pas n'importe quoi pour éviter le combat. Pour que tu comprennes bien, bis repetita ...
+INFO	2019-09-05 17:50:50,544	316826	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Choix N°1 - Mode CHALLENGER : c'est l'ordinateur qui choisit la combinaison. A toi de la découvrir en un nombre de coups limités
+INFO	2019-09-05 17:50:50,544	316826	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Choix N°2 - Mode DEFENSEUR : c'est toi qui choisit la combinaison et l'ordinateur qui attaque dans un nombre de coups limités
+INFO	2019-09-05 17:50:50,544	316826	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Choix N°3 - Mode DUEL : l'ordinateur et toi vous choisissez vos combinaisons et attaquez à tour de rôle
+INFO	2019-09-05 17:50:50,544	316826	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Alors Ami Pimpon, quelle est ta décision ? Ecris ici le numéro de ton choix :
+INFO	2019-09-05 17:50:50,544	316826	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	Attention, pense à entrer un nombre entier positif ...
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.JeuBegin	[main]	BRAVO ! Tu as choisi le mode CHALLENGER. A toi de trouver la combinaison de l'ordinateur. Que la Force soit avec toi !
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	7
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	9
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	7
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	6
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Élément à l'index 0 = 7
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Élément à l'index 1 = 9
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Élément à l'index 2 = 7
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Élément à l'index 3 = 6
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Bonjour, Ici le Player Machine. La combinaison que tu dois trouver a une longueur de 4 chiffres.
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Attention le chiffre que tu choisis doit être un nombre entier positif.
+INFO	2019-09-05 17:50:55,774	322056	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Merci d'indiquer ici le chiffre que tu choisis :
+INFO	2019-09-05 17:51:03,127	329409	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	La saisie n'est pas correcte. Il faut recommencer ...
+INFO	2019-09-05 17:51:03,127	329409	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Merci d'indiquer ici le chiffre que tu choisis :
+INFO	2019-09-05 17:51:05,203	331485	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	La saisie n'est pas correcte. Il faut recommencer ...
+INFO	2019-09-05 17:51:05,203	331485	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Merci d'indiquer ici le chiffre que tu choisis :
+INFO	2019-09-05 17:51:07,765	334047	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Merci d'indiquer ici le chiffre que tu choisis :
+INFO	2019-09-05 17:51:09,147	335429	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Merci d'indiquer ici le chiffre que tu choisis :
+INFO	2019-09-05 17:51:10,235	336517	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Merci d'indiquer ici le chiffre que tu choisis :
+INFO	2019-09-05 17:51:11,561	337843	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Élément à l'index 0 = 1
+INFO	2019-09-05 17:51:11,561	337843	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Élément à l'index 1 = 2
+INFO	2019-09-05 17:51:11,561	337843	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Élément à l'index 2 = 3
+INFO	2019-09-05 17:51:11,561	337843	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Élément à l'index 3 = 4
+INFO	2019-09-05 17:51:11,561	337843	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Pour chacun des chiffres que tu as proposés, je vais te donner une indication : 
+ = si c'est bon, - si ton chiffre est inférieur, + si ton chiffre est supérieur
+INFO	2019-09-05 17:51:11,561	337843	com.ocr.jeanlouis34.escapegame.PlayerMachine	[main]	Ta proposition [1, 2, 3, 4]donne les résultats suivants :[-, -, -, -]

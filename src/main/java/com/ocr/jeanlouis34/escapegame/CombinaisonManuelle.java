@@ -1,20 +1,23 @@
 package com.ocr.jeanlouis34.escapegame;
 
-import java.util.LinkedList;
+import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class CombinaisonManuelle {
 
-    public LinkedList combinaisonsManuelle = new LinkedList();
+    public List combinaisonsManuelle = new ArrayList<>();
     private int TirageManuel;
+    static Logger logger = Logger.getLogger(CombinaisonManuelle.class);
 
     /*JeuBegin jeubegin = new JeuBegin();
     public int CombiSize = jeubegin.getNbCombinaisons();*/
 
     public List combinerManuelle() {
-        System.out.println("Bonjour, Ici le Player Machine. La combinaison que tu dois trouver a une longueur de " + "4" +" chiffres.");
-        System.out.println("Attention le chiffre que tu choisis doit être un nombre entier positif.");
+        logger.info("Bonjour, Ici le Player Machine. La combinaison que tu dois trouver a une longueur de " + "4" +" chiffres.");
+        logger.info("Attention le chiffre que tu choisis doit être un nombre entier positif.");
         while (this.combinaisonsManuelle.size() < 4)
             try {
                 tirerManuel();
@@ -25,12 +28,12 @@ public class CombinaisonManuelle {
     }
 
     public void tirerManuel() {
-        System.out.println("Merci d'indiquer ici le chiffre que tu choisis :");
+        logger.info("Merci d'indiquer ici le chiffre que tu choisis :");
         Scanner sc = new Scanner(System.in);
         try {
             this.TirageManuel = sc.nextInt();
         } catch (Exception e) {
-            System.out.println("La saisie du nombre du mode de jeu n'est pas correcte. Il faut recommencer ...");
+            logger.info("La saisie du nombre du mode de jeu n'est pas correcte. Il faut recommencer ...");
             sc.next();
             try {
                 this.TirageManuel = sc.nextInt();
@@ -38,17 +41,17 @@ public class CombinaisonManuelle {
                 recommencerTirageManuel();
             }
         }
-        ((LinkedList) this.combinaisonsManuelle).addLast(TirageManuel);
+        ((ArrayList) this.combinaisonsManuelle).add(TirageManuel);
     }
 
     public void recommencerTirageManuel() {
-        System.out.println("La saisie n'est toujours pas correcte. On recommence à zéro ...");
+        logger.info("La saisie n'est toujours pas correcte. On recommence à zéro ...");
         tirerManuel();
     }
 
     public void printCombinaisonsManuelle() {
         for (int i = 0; i < 4; i++) {
-            System.out.println("Élément à l'index " + i + " = " + combinaisonsManuelle.get(i));
+            logger.info("Élément à l'index " + i + " = " + combinaisonsManuelle.get(i));
         }
     }
 }

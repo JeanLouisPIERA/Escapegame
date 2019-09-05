@@ -1,6 +1,8 @@
 package com.ocr.jeanlouis34.escapegame;
 
-import java.util.LinkedList;
+import org.apache.log4j.Logger;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -9,7 +11,8 @@ import java.util.Random;
 
 public class CombinaisonsAuto {
 
-    public LinkedList combinaisonsAuto = new LinkedList();
+    public List combinaisonsAuto = new ArrayList<>();
+    static Logger logger = Logger.getLogger(CombinaisonsAuto.class);
 
     /*JeuBegin jeubegin = new JeuBegin();
     public int CombiSize = jeubegin.getNbCombinaisons();*/
@@ -26,16 +29,16 @@ public class CombinaisonsAuto {
 
     public void printComnbinaisonsAuto() {
         for (int i = 0; i < 4; i++) {
-            System.out.println("Élément à l'index " + i + " = " + combinaisonsAuto.get(i));
+            logger.info("Élément à l'index " + i + " = " + combinaisonsAuto.get(i));
         }
     }
 
     public void tirerAuto() {
         Random r = new Random();
         int randint = Math.abs(r.nextInt()) % 10;
-        System.out.println(randint);
+        logger.info(randint);
         try {
-            ((LinkedList) this.combinaisonsAuto).addLast(randint);
+            ((ArrayList) this.combinaisonsAuto).add(randint);
         } catch (Exception e) {
             e.printStackTrace();
         }
