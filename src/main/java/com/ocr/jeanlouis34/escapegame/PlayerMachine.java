@@ -70,13 +70,7 @@ public class PlayerMachine {
             sc.next();
             tirerManuel();
             }
-        /*((ArrayList) this.combinaisonsManuelle).add(TirageManuel);*/
     }
-
-    /*public void recommencerTirageManuel() {
-        logger.info("La saisie n'est toujours pas correcte. On recommence à zéro ...");
-        tirerManuel();
-    }*/
 
     public void printCombinaisonsManuelle() {
         for (int j = 0; j < 4; j++) {
