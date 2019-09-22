@@ -1,17 +1,6 @@
 package com.ocr.jeanlouis34.escapegame;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-class JeuBeginTest {
+class JeuBeginTest {/*
 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
@@ -58,6 +47,6 @@ class JeuBeginTest {
         String output = outContent.toString().replace("\r\n", "\n");
         assertEquals(output.endsWith("BRAVO ! Tu as choisi le mode DEFENSEUR. Tous mes voeux pour que ce satané ordinateur ne trouve pas ta combinaison !\n"), true);
         assertEquals(output.length() > "BRAVO ! Tu as choisi le mode DEFENSEUR. Tous mes voeux pour que ce satané ordinateur ne trouve pas ta combinaison !\n".length(), true);
-    }
+    }*/
 
 }

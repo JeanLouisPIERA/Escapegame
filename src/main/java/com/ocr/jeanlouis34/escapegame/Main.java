@@ -1,45 +1,61 @@
 package com.ocr.jeanlouis34.escapegame;
 
 
+import org.apache.log4j.Logger;
 
 public class Main {
 
+	public static void main(String[] args){
 
-    public static void main(String[] args) {
-	JeuBegin jeubegin = new JeuBegin();
-	PlayerMachine playermachine = new PlayerMachine();
+	Logger logger = Logger.getLogger(Main.class);
+
+	/*PlayerJoueur NomJoueur = new PlayerJoueur();*/
+	/*JeuBegin jeubegin = new JeuBegin();
+	PlayerMachine playermachine = new PlayerMachine();*/
+	JeuChallenger jeuChallenger = new JeuChallenger();
+	/*Combinaisons combinaisons;
+	CombinaisonsAuto combinaisonsAuto;*/
 	/*CombinaisonsAuto combinaisonsauto = new CombinaisonsAuto();
 	CombinaisonManuelle combinaisonmanuelle = new CombinaisonManuelle();*/
-	jeubegin.AskSomething();
-	jeubegin.runModeJeu();
-	playermachine.combinerAuto();
-	playermachine.printComnbinaisonsAuto();
+
+	jeuChallenger.runJeuChallenger();
+	/*jeubegin.runModeJeu();
+	jeubegin.setModeJeu();
+	jeubegin.setNbCombinaisons();*/
+	/*combinaisonsAuto.setCombinaisonsAuto();*/
+	/*playermachine.combinerAuto();*/
+	/*playermachine.getCombinaisonsAuto();*/
+	/*combinaisonsAuto.printCombinaisonsAuto();
 	playermachine.combinerManuelle();
 	playermachine.printCombinaisonsManuelle();
-	playermachine.comparerleslistes();
+	playermachine.comparerleslistes();*/
 
-	/*
-		try {
-			combinaisonsauto.combinerAuto();
+
+		/*try {
+			combinaisonsauto.getCombinaisonsAuto();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 		try {
 			combinaisonsauto.printComnbinaisonsAuto();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ew) {
+			logger.error(ew);
 		}
-		try {
-			combinaisonmanuelle.combinerManuelle();
-		} catch (Exception e) {
-			e.printStackTrace();
+		/*try {
+			combinaisonmanuelle.setCombinaisonsManuelle();
+		} catch (Exception ex) {
+			logger.error(ex);
 		}
 		try {
 			combinaisonmanuelle.printCombinaisonsManuelle();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ey) {
+			logger.error(ey);
+		}
+		try {
+			playermachine.comparerleslistes();
+		} catch (Exception ez) {
+			logger.error(ez);
 		}*/
-
 	}
 }
 
