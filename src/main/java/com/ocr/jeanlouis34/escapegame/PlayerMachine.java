@@ -48,10 +48,11 @@ public class PlayerMachine {
     private List<Integer> combinaisonsManuelle;
     private List<String> comparaisonsListes;
     private int tirageManuel;
-    private JeuBegin jeubegin = new JeuBegin();
+    private JeuBegin jeubegin;
 
 
     public PlayerMachine() {
+        this(new ArrayList<Integer>(), new ArrayList<Integer>(), new ArrayList<String>(), 0);
     }
 
     public PlayerMachine(List<Integer> combinaisonsAuto, List<Integer> combinaisonsManuelle, List<String> comparaisonsListes, int tirageManuel) {
@@ -59,6 +60,7 @@ public class PlayerMachine {
         this.combinaisonsManuelle = combinaisonsManuelle;
         this.comparaisonsListes = comparaisonsListes;
         this.tirageManuel = tirageManuel;
+        this.jeubegin = new JeuBegin();
     }
 
     public List<Integer> getCombinaisonsAuto() {
@@ -95,6 +97,12 @@ public class PlayerMachine {
 
     public void combinerAuto() {
 
+        if (this.combinaisonsAuto == null) {
+            // /!\ attention this.combinaisonsAuto est null (car pas instancie).
+            // Solution 1 : l'instancier ici et continuer
+            // Solution 2 : ne pas l'instancier ici, et afficher un message d'erreur avec return qui arrete l'execution de la méthode
+        }
+
         while (this.combinaisonsAuto.size() < jeubegin.getNbCombinaisons()) {
             try {
                 tirerAuto();
@@ -102,7 +110,9 @@ public class PlayerMachine {
                 logger.error(e);
             }
         }
-        setCombinaisonsAuto(this.combinaisonsAuto);
+
+        // /!\ setCombinaisonsAuto est inutile, il est fait dans tirerAuto
+        // setCombinaisonsAuto(this.combinaisonsAuto);
     }
 
     public void printCombinaisonsAuto() {
@@ -116,7 +126,7 @@ public class PlayerMachine {
         int randint = Math.abs(r.nextInt()) % 10;
         logger.info(randint);
         try {
-            (/*(ArrayList)*/ this.combinaisonsAuto).add(randint);
+            this.combinaisonsAuto.add(randint);
         } catch (Exception e) {
             logger.error (e);
         }
