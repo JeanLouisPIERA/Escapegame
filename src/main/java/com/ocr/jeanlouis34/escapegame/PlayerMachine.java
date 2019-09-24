@@ -50,19 +50,20 @@ public class PlayerMachine {
     private List<Integer> combinaisonsManuelle;
     private List<String> comparaisonsListes;
     private int tirageManuel;
-    private JeuBegin jeubegin = new JeuBegin();
+    private JeuBegin jeubegin;
 
 
-    public PlayerMachine() {
-        this(new ArrayList<Integer>(), new ArrayList<Integer>(), new ArrayList<String>(),tirageManuel: 0);
+    public PlayerMachine(JeuBegin jeuBegin) {
+        this(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0, jeuBegin);
+
     }
 
-    public PlayerMachine(List<Integer> combinaisonsAuto, List<Integer> combinaisonsManuelle, List<String> comparaisonsListes, int tirageManuel) {
+    public PlayerMachine(List<Integer> combinaisonsAuto, List<Integer> combinaisonsManuelle, List<String> comparaisonsListes, int tirageManuel, JeuBegin jeuBegin) {
         this.combinaisonsAuto = combinaisonsAuto;
         this.combinaisonsManuelle = combinaisonsManuelle;
         this.comparaisonsListes = comparaisonsListes;
         this.tirageManuel = tirageManuel;
-        this.jeubegin = new JeuBegin();
+        this.jeubegin = jeuBegin;
     }
 
     public List<Integer> getCombinaisonsAuto() {
@@ -98,23 +99,15 @@ public class PlayerMachine {
     }
 
     public void combinerAuto() {
-
-        if (this.combinaisonsAuto == null) {
-            return
-            // /!\ attention this.combinaisonsAuto est null (car pas instancie).
-            // Solution 1 : l'instancier ici et continuer
-            // Solution 2 : ne pas l'instancier ici, et afficher un message d'erreur avec return qui arrete l'execution de la méthode
-            while (this.combinaisonsAuto.size() < jeubegin.getNbCombinaisons()) {
-                try {
-                    tirerAuto();
-                } catch (Exception e) {
-                    logger.error(e);
-                }
+        while (this.combinaisonsAuto.size() < jeubegin.getNbCombinaisons()) {
+            try {
+                tirerAuto();
+            } catch (Exception e) {
+                logger.error(e);
             }
-            // /!\ setCombinaisonsAuto est inutile, il est fait dans tirerAuto
-            // setCombinaisonsAuto(this.combinaisonsAuto);
         }
     }
+
 
     public void printCombinaisonsAuto() {
         for (int i = 0; i < jeubegin.getNbCombinaisons(); i++) {
@@ -129,13 +122,13 @@ public class PlayerMachine {
         try {
             this.combinaisonsAuto.add(randint);
         } catch (Exception e) {
-            logger.error (e);
+            logger.error(e);
         }
     }
 
     public void combinerManuelle() {
 
-        logger.info("Bonjour, Ici le Player Machine. La combinaison que tu dois trouver a une longueur de " + jeubegin.getNbCombinaisons() +" chiffres.");
+        logger.info("Bonjour, Ici le Player Machine. La combinaison que tu dois trouver a une longueur de " + jeubegin.getNbCombinaisons() + " chiffres.");
         logger.info("Attention le chiffre que tu choisis doit être un nombre entier positif.");
         while (this.combinaisonsManuelle.size() < jeubegin.getNbCombinaisons())
             try {
@@ -157,7 +150,7 @@ public class PlayerMachine {
             logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
             sc.next();
             tirerManuel();
-            }
+        }
         /*setTirageManuel(this.tirageManuel);*/
     }
 
@@ -171,7 +164,7 @@ public class PlayerMachine {
         String A = "=";
         String B = "-";
         String C = "+";
-        for ( int k = 0; k < jeubegin.getNbCombinaisons(); k++) {
+        for (int k = 0; k < jeubegin.getNbCombinaisons(); k++) {
             int cm = (Integer) combinaisonsManuelle.get(k);
             int ca = (Integer) combinaisonsAuto.get(k);
             if (cm == ca) {
