@@ -7,22 +7,24 @@ import java.util.Scanner;
 
 public class JeuBegin {
 
-    private String nomJoueur = "";
-    private int nbCombinaisons = 0;
-    private int modeJeu = 0;
+    private String nomJoueur;
+    private int nbCombinaisons;
+    private int modeJeu;
     static Logger logger = Logger.getLogger(JeuBegin.class);
 
     /* CONSTRUCTEURS */
 
     public JeuBegin() {
-
+        nomJoueur = "";
+        nbCombinaisons = 0;
+        modeJeu = 0;
     }
 
-    public JeuBegin(String nomJoueur, int nbCombinaisons, int modeJeu) {
+    /*public JeuBegin(String nomJoueur, int nbCombinaisons, int modeJeu) {
         this.nomJoueur = nomJoueur;
         this.nbCombinaisons = nbCombinaisons;
         this.modeJeu = modeJeu;
-    }
+    }*/
 
     /* NOM JOUEUR */
 
