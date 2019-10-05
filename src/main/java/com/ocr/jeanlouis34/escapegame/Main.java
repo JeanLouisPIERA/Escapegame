@@ -5,58 +5,59 @@ import org.apache.log4j.Logger;
 
 public class Main {
 
-	public static void main(String[] args){
+    public static void main(String[] args) {
 
-	Logger logger = Logger.getLogger(Main.class);
+        Logger logger = Logger.getLogger(Main.class);
 
-	/*PlayerJoueur NomJoueur = new PlayerJoueur();*/
-	/*JeuBegin jeubegin = new JeuBegin();
-	PlayerMachine playermachine = new PlayerMachine();*/
-	JeuChallenger jeuChallenger = new JeuChallenger();
-	/*Combinaisons combinaisons;
-	CombinaisonsAuto combinaisonsAuto;*/
-	/*CombinaisonsAuto combinaisonsauto = new CombinaisonsAuto();
-	CombinaisonManuelle combinaisonmanuelle = new CombinaisonManuelle();*/
+        JeuBegin jeubegin = new JeuBegin();
+        JeuEnd jeuEnd = new JeuEnd(jeubegin);
+        JeuChallenger jeuChallenger = new JeuChallenger(jeubegin, jeuEnd);
+        JeuDefenseur jeuDefenseur = new JeuDefenseur(jeubegin, jeuEnd);
+        JeuDuel jeuDuel = new JeuDuel(jeubegin, jeuDefenseur, jeuChallenger);
 
-	jeuChallenger.runJeuChallenger();
-	/*jeubegin.runModeJeu();
-	jeubegin.setModeJeu();
-	jeubegin.setNbCombinaisons();*/
-	/*combinaisonsAuto.setCombinaisonsAuto();*/
-	/*playermachine.combinerAuto();*/
-	/*playermachine.getCombinaisonsAuto();*/
-	/*combinaisonsAuto.printCombinaisonsAuto();
-	playermachine.combinerManuelle();
-	playermachine.printCombinaisonsManuelle();
-	playermachine.comparerleslistes();*/
-
-
-		/*try {
-			combinaisonsauto.getCombinaisonsAuto();
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		try {
-			combinaisonsauto.printComnbinaisonsAuto();
-		} catch (Exception ew) {
-			logger.error(ew);
-		}
-		/*try {
-			combinaisonmanuelle.setCombinaisonsManuelle();
-		} catch (Exception ex) {
-			logger.error(ex);
-		}
-		try {
-			combinaisonmanuelle.printCombinaisonsManuelle();
-		} catch (Exception ey) {
-			logger.error(ey);
-		}
-		try {
-			playermachine.comparerleslistes();
-		} catch (Exception ez) {
-			logger.error(ez);
-		}*/
-	}
+        jeubegin.addNomJoueur();
+        jeubegin.runModeJeu();
+        do {
+            switch (jeubegin.getModeJeu()) {
+                case 1:
+                    jeuChallenger.runJeuChallenger();
+                    if (jeuChallenger.getVictoireJoueur() == 1 || jeuChallenger.getTourPartie() == jeubegin.getNbTours()) {
+                        jeuEnd.finirlapartie();
+                    }
+                    break;
+                case 2:
+                    jeuDefenseur.runJeuDefenseur();
+                    if (jeuDefenseur.getVictoireJoueurDef() == 2 || jeuDefenseur.getTourPartie1() == jeubegin.getNbTours()) {
+                        jeuEnd.finirlapartie();
+                    }
+                    break;
+                case 3:
+                    jeuDuel.runJeuDuel();
+                    switch (jeuDuel.getVictoireJoueurDuel()) {
+                        case 1 :
+                        case 3 :
+                        case 5 :
+                            jeuEnd.finirlapartie();
+                            break;
+                        case 2 :
+                            jeuDefenseur.runJeuDefenseur();
+                            break;
+                        case 4 :
+                            jeuChallenger.runJeuChallenger();
+                            break;
+                    }
+                    break;
+                default:
+                    logger.info("Aucun de tes choix n'est le bon. GAME OVER");
+                    System.exit(1);
+                    break;
+            }
+        } while (jeuEnd.getReady().equals("OUI"));
+    }
 }
+
+
+
+
 
 

@@ -4,186 +4,89 @@ import org.apache.log4j.Logger;
 
 import java.util.*;
 
-/*import java.util.*;*/
+/**
+ * This class is the twin class of Player Machine.
+ *
+ * This class is only linked with the Jeuchallenger Class in the Challenger pattern.
+ *
+ * This class enables to compare both automatically and handly made combinaisons.
+ *
+ * That is why it uses the variables of all the classes about COMBINAISON.
+ *
+ */
 
 public class PlayerMachine {
 
-    /*static Logger logger = Logger.getLogger(PlayerMachine.class);
-    public int TirageManuel;
-    private JeuBegin jeubegin;
-    private CombinaisonsAuto combiAuto;
-    private CombinaisonManuelle combiManuelle;
-    private Integer nbCombinaisons;
-    private List<Integer> combinaisonsAuto = new ArrayList<>();
-    private List <Integer> combinaisonsManuelle = new ArrayList <>();*/
-
-    /*private Integer getNbCombinaisons() {
-        nbCombinaisons = jeubegin.getNbCombinaisons();
-        return nbCombinaisons;
-    }
-
-    private List getCombinaisonsAuto() {
-        combinaisonsAuto = combiAuto.getCombinaisonsAuto();
-        return combinaisonsAuto;
-    }*/
-
-    /*public List combinerAuto() {
-        combiAuto.combinerAuto();
-        return combinaisonsAuto;
-    }*/
-
-    /*public void printCombinaisonsAuto() {
-        combiAuto.printCombinaisonsAuto();
-    }*/
-
-    /*public List combinerManuelle() {
-        combiManuelle.combinerManuelle();
-        return combinaisonsManuelle;
-    }
-
-    public void printCombinaisonsManuelle() {
-        combiManuelle.printCombinaisonsManuelle();
-    }*/
-
     static Logger logger = Logger.getLogger(PlayerMachine.class);
-    private List<Integer> combinaisonsAuto;
-    private List<Integer> combinaisonsManuelle;
-    private List<String> comparaisonsListes;
-    private int tirageManuel;
-    private JeuBegin jeubegin;
+    private int victoireChallenger;
+    private List<String> comparaisonsListesAuto;
+    private Combinaisons combinaisons;
+    private CombinaisonsAuto combinaisonsAuto;
+    private CombinaisonManuelle combinaisonManuelle;
 
 
-    public PlayerMachine(JeuBegin jeuBegin) {
-        this(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), 0, jeuBegin);
+    public PlayerMachine(Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
+        this(0, new ArrayList<>(),combinaisons, combinaisonsAuto, combinaisonManuelle);
 
     }
 
-    public PlayerMachine(List<Integer> combinaisonsAuto, List<Integer> combinaisonsManuelle, List<String> comparaisonsListes, int tirageManuel, JeuBegin jeuBegin) {
+    public PlayerMachine(int victoireChallenger, List<String> comparaisonsListesAuto, Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
+        this.victoireChallenger = victoireChallenger;
+        this.comparaisonsListesAuto = comparaisonsListesAuto;
+        this.combinaisons = combinaisons;
         this.combinaisonsAuto = combinaisonsAuto;
-        this.combinaisonsManuelle = combinaisonsManuelle;
-        this.comparaisonsListes = comparaisonsListes;
-        this.tirageManuel = tirageManuel;
-        this.jeubegin = jeuBegin;
+        this.combinaisonManuelle = combinaisonManuelle;
     }
 
-    public List<Integer> getCombinaisonsAuto() {
-        return combinaisonsAuto;
+    public List getComparaisonsListesAuto() {
+        return comparaisonsListesAuto;
     }
 
-    public void setCombinaisonsAuto(ArrayList<Integer> combinaisonsAuto) {
-        this.combinaisonsAuto = combinaisonsAuto;
+    public void setComparaisonsListesAuto(ArrayList<String> comparaisonsListes) {
+        this.comparaisonsListesAuto = comparaisonsListes;
     }
 
-    public List<Integer> getCombinaisonsManuelle() {
-        return combinaisonsManuelle;
+    public int getVictoireChallenger() {
+        return victoireChallenger;
     }
 
-    public void setCombinaisonsManuelle(ArrayList<Integer> combinaisonsManuelle) {
-        this.combinaisonsManuelle = combinaisonsManuelle;
+    public void setVictoireChallenger(int victoireChallenger) {
+        this.victoireChallenger = victoireChallenger;
     }
 
-    public List getComparaisonsListes() {
-        return comparaisonsListes;
-    }
-
-    public void setComparaisonsListes(ArrayList<String> comparaisonsListes) {
-        this.comparaisonsListes = comparaisonsListes;
-    }
-
-    public int getTirageManuel() {
-        return tirageManuel;
-    }
-
-    public void setTirageManuel(int tirageManuel) {
-        this.tirageManuel = tirageManuel;
-    }
-
-    public void combinerAuto() {
-        while (this.combinaisonsAuto.size() < jeubegin.getNbCombinaisons()) {
-            try {
-                tirerAuto();
-            } catch (Exception e) {
-                logger.error(e);
-            }
-        }
-    }
+    /**
+     * This is the lone method of this class which enables the Machine Player to compare the result of both combinaisons, key by key.
+     */
 
 
-    public void printCombinaisonsAuto() {
-        for (int i = 0; i < jeubegin.getNbCombinaisons(); i++) {
-            logger.info("Élément à l'index " + i + " = " + combinaisonsAuto.get(i));
-        }
-    }
-
-    public void tirerAuto() {
-        Random r = new Random();
-        int randint = Math.abs(r.nextInt()) % 10;
-        logger.info(randint);
-        try {
-            this.combinaisonsAuto.add(randint);
-        } catch (Exception e) {
-            logger.error(e);
-        }
-    }
-
-    public void combinerManuelle() {
-
-        logger.info("Bonjour, Ici le Player Machine. La combinaison que tu dois trouver a une longueur de " + jeubegin.getNbCombinaisons() + " chiffres.");
-        logger.info("Attention le chiffre que tu choisis doit être un nombre entier positif.");
-        while (this.combinaisonsManuelle.size() < jeubegin.getNbCombinaisons())
-            try {
-                tirerManuel();
-            } catch (Exception e) {
-                logger.error(e);
-            }
-        /*setCombinaisonsManuelle(this.combinaisonsManuelle);*/
-    }
-
-    public void tirerManuel() {
-
-        logger.info("Merci d'indiquer ici le chiffre que tu choisis :");
-        Scanner sc = new Scanner(System.in).useDelimiter(" *");
-        try {
-            this.tirageManuel = sc.nextInt();
-            (/*(ArrayList)*/ this.combinaisonsManuelle).add(tirageManuel);
-        } catch (InputMismatchException e) {
-            logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
-            sc.next();
-            tirerManuel();
-        }
-        /*setTirageManuel(this.tirageManuel);*/
-    }
-
-    public void printCombinaisonsManuelle() {
-        for (int j = 0; j < jeubegin.getNbCombinaisons(); j++) {
-            logger.info("Élément à l'index " + j + " = " + combinaisonsManuelle.get(j));
-        }
-    }
-
-    public void comparerleslistes() {
+    public void comparerLesListesAuto() {
         String A = "=";
         String B = "-";
         String C = "+";
-        for (int k = 0; k < jeubegin.getNbCombinaisons(); k++) {
-            int cm = (Integer) combinaisonsManuelle.get(k);
-            int ca = (Integer) combinaisonsAuto.get(k);
+        for (int k = 0; k < combinaisons.getNbCombinaisons(); k++) {
+            int cm = (Integer) combinaisonManuelle.getCombinaisonManuelle().get(k);
+            int ca = (Integer) combinaisonsAuto.getCombinaisonsAuto().get(k);
             if (cm == ca) {
-                (/*(ArrayList)*/ comparaisonsListes).add(A);
+                (comparaisonsListesAuto).add(A);
             } else if (cm < ca) {
-                (/*(ArrayList)*/ comparaisonsListes).add(B);
+                (comparaisonsListesAuto).add(B);
             } else {
-                (/*(ArrayList)*/ comparaisonsListes).add(C);
+                (comparaisonsListesAuto).add(C);
             }
         }
-        logger.info("Pour chacun des chiffres que tu as proposés, je vais te donner une indication : \n = si c'est bon, - si ton chiffre est inférieur, + si ton chiffre est supérieur");
-        logger.info("Ta proposition " + combinaisonsManuelle + "donne les résultats suivants :" + comparaisonsListes);
-        if (combinaisonsManuelle.equals(combinaisonsAuto)) {
-            logger.info("Bravo tu as gagné. Ta combinaison est la combinaison secrète.");
-        } else {
-            logger.info("Tu n'as pas encore découvert la combinaison secrète. Tu as le droit de jouer une partie supplémentaire.");
-            this.combinerManuelle();
+        logger.info("\nPour chacun des chiffres que tu as proposés, je vais te donner une indication : \n = si c'est bon, - si ton chiffre est inférieur, + si ton chiffre est supérieur");
+        logger.info("\nTa proposition " + combinaisonManuelle.getCombinaisonManuelle() + " donne les résultats suivants : " + comparaisonsListesAuto);
+        if (combinaisonManuelle.getCombinaisonManuelle().equals(combinaisonsAuto.getCombinaisonsAuto())) {
+                logger.info("\nTu as découvert la combinaison secrète du Player Machine.");
+                victoireChallenger = 1;
+            } else {
+                logger.info("\nTu n'as toujours pas découvert la combinaison secrète du Player Machine.");
+                victoireChallenger = 2;
+            }
+        combinaisonManuelle.getCombinaisonManuelle().clear();
+        comparaisonsListesAuto.clear();
         }
-        /*setComparaisonsListes(this.comparaisonsListes);*/
     }
-}
+
+
 
