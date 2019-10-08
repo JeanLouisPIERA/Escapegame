@@ -61,20 +61,20 @@ public class JeuDefenseur {
 
     public void runJeuDefenseur() {
         tourPartie1 = 0;
-        combinaisonManuelle.getCombinaisonManuelle().clear();
-        combinaisonsAuto.getCombinaisonsAuto().clear();
+        combinaisonManuelle.getCombinaison().clear();
+        combinaisonsAuto.getCombinaison().clear();
         combinaisons.addNbCombinaisons();
-        combinaisonManuelle.combinerManuelle();
+        combinaisonManuelle.combiner();
         do {
                 /*combinaisonManuelle.printCombinaisonManuelle();*/
-                combinaisonsAuto.combinerAuto();
+                combinaisonsAuto.combiner();
                 /*combinaisonsAuto.printCombinaisonsAuto();*/
-                playerJoueur.comparerLesListesManuelle();
+                playerJoueur.comparerLesListes();
                 tourPartie1++;
-                if (playerJoueur.getVictoireDefenseur() == 1) {
+                if (playerJoueur.getVictoire() == 1) {
                     victoireJoueurDef = 1;
                     logger.info("Bravo " + jeubegin.getNomJoueur() + ". Tu t'es bien défendu.");
-                } else if (playerJoueur.getVictoireDefenseur() == 2) {
+                } else if (playerJoueur.getVictoire() == 2) {
                     victoireJoueurDef = 2;
                     logger.info("Désolé " + jeubegin.getNomJoueur() + ". Le Player Machine a été plus fort que toi.");
                 }

@@ -67,20 +67,20 @@ public class JeuChallenger {
 
     public void runJeuChallenger() {
         tourPartie = 0;
-        combinaisonManuelle.getCombinaisonManuelle().clear();
-        combinaisonsAuto.getCombinaisonsAuto().clear();
+        combinaisonManuelle.getCombinaison().clear();
+        combinaisonsAuto.getCombinaison().clear();
         combinaisons.addNbCombinaisons();
-        combinaisonsAuto.combinerAuto();
+        combinaisonsAuto.combiner();
             do {
                 /*combinaisonsAuto.printCombinaisonsAuto();*/
-                combinaisonManuelle.combinerManuelle();
+                combinaisonManuelle.combiner();
                 /*combinaisonManuelle.printCombinaisonManuelle();*/
-                playerMachine.comparerLesListesAuto();
+                playerMachine.comparerLesListes();
                 tourPartie++;
-                if (playerMachine.getVictoireChallenger() == 1) {
+                if (playerMachine.getVictoire() == 1) {
                     victoireJoueur = 1;
                     logger.info("Bravo " + jeubegin.getNomJoueur() + ". Tu as gagné.");
-                } else if (playerMachine.getVictoireChallenger() == 2) {
+                } else if (playerMachine.getVictoire() == 2) {
                     victoireJoueur = 2;
                     logger.info("Désolé " + jeubegin.getNomJoueur() + ". Tu n'as pas gagné.");
                 }

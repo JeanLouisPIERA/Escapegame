@@ -20,17 +20,17 @@ import java.util.Scanner;
  * WARNING : I have introduced a overrated level which enables to detect if the Human Player have cheated.
  */
 
-public class PlayerJoueur {
+public class PlayerJoueur implements Player {
 
     static Logger logger = Logger.getLogger(PlayerJoueur.class);
-    private int victoireDefenseur;
+    private int victoire;
     private int ca;
     private int cm;
     private String cr;
-    private List<String> comparaisonsListesManuelle;
+    private List<String> comparaisonsListes;
     private Combinaisons combinaisons;
     private CombinaisonsAuto combinaisonsAuto;
-    private CombinaisonManuelle combinaisonManuelle;
+    private CombinaisonManuelle combinaisonManuelle ;
     private JeuBegin jeubegin = new JeuBegin();
 
     public PlayerJoueur(Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
@@ -38,44 +38,44 @@ public class PlayerJoueur {
     }
 
 
-    public PlayerJoueur(int victoireDefenseur, int ca, int cm, String cr, List<String> comparaisonsListesManuelle, Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
-        this.victoireDefenseur = victoireDefenseur;
+    public PlayerJoueur(int victoire, int ca, int cm, String cr, List<String> comparaisonsListes, Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
+        this.victoire = victoire;
         this.ca = ca;
         this.cm = cm;
         this.cr = cr;
-        this.comparaisonsListesManuelle = comparaisonsListesManuelle;
+        this.comparaisonsListes = comparaisonsListes;
         this.combinaisons = combinaisons;
         this.combinaisonsAuto = combinaisonsAuto;
         this.combinaisonManuelle = combinaisonManuelle;
     }
 
-    public List<String> getComparaisonsListesManuelle() {
-        return comparaisonsListesManuelle;
+    public List<String> getComparaisonsListes() {
+        return comparaisonsListes;
     }
 
-    public void setComparaisonsListesManuelle(List<String> comparaisonsListesManuelle) {
-        this.comparaisonsListesManuelle = comparaisonsListesManuelle;
+    public void setComparaisonsListesManuelle(List<String> comparaisonsListes) {
+        this.comparaisonsListes = comparaisonsListes;
     }
 
-    public int getVictoireDefenseur() {
-        return victoireDefenseur;
+    public int getVictoire() {
+        return victoire;
     }
 
     public void setVictoireDefenseur(int victoireDefenseur) {
-        this.victoireDefenseur = victoireDefenseur;
+        this.victoire = victoire;
     }
 
     /**
      * This is the lone method of this class which enables the Human Player to compare the result of both combinaisons, key by key.
      */
 
-    public void comparerLesListesManuelle() {
+    public void comparerLesListes() {
         logger.info("\nComparons step by step les 2 combinaisons ...");
         for (int k = 0; k < combinaisons.getNbCombinaisons(); k++) {
             int K = k + 1;
-            this.ca = (Integer) combinaisonsAuto.getCombinaisonsAuto().get(k);
+            this.ca = (Integer) combinaisonsAuto.getCombinaison().get(k);
             logger.info("\nLe chiffre proposé par la machine en position " + K + " est : " + ca);
-            this.cm = (Integer) combinaisonManuelle.getCombinaisonManuelle().get(k);
+            this.cm = (Integer) combinaisonManuelle.getCombinaison().get(k);
             logger.info("Le chiffre de ta combinaison secrète en position " + K + " est : " + cm);
             logger.info("Si la proposition de la machine correspond au chiffre de ta combinaison secrète tape =,\nsi elle est moins élevée tape -,\nsi elle est plus élevée tape +");
             String cr1 = "=";
@@ -84,7 +84,7 @@ public class PlayerJoueur {
             Scanner sc = new Scanner(System.in);
             try {
                 this.cr = sc.nextLine();
-                (comparaisonsListesManuelle).add(cr);
+                (comparaisonsListes).add(cr);
                 if ((ca == cm && !cr.equals(cr1)) || (ca > cm && !cr.equals(cr2)) || (ca < cm && !cr.equals(cr3))) {
                     logger.info("Tu es un tricheur Pimpon. La Machine ne joue pas avec les tricheurs. FIN DE PARTIE. GAME OVER.");
                     System.exit(0);
@@ -92,18 +92,22 @@ public class PlayerJoueur {
             } catch (InputMismatchException e) {
                 logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
                 sc.next();
-                comparerLesListesManuelle();
+                comparerLesListes();
             }
         }
-            logger.info("La proposition de la machine " + combinaisonsAuto.getCombinaisonsAuto() + " donne les résultats suivants : " + comparaisonsListesManuelle);
-            if (combinaisonManuelle.getCombinaisonManuelle().equals(combinaisonsAuto.getCombinaisonsAuto())) {
+        printComparaisonsListes();
+        combinaisonsAuto.getCombinaison().clear();
+        comparaisonsListes.clear();
+        }
+
+        public void printComparaisonsListes(){
+            logger.info("La proposition de la machine " + combinaisonsAuto.getCombinaison() + " donne les résultats suivants : " + comparaisonsListes);
+            if (combinaisonManuelle.getCombinaison().equals(combinaisonsAuto.getCombinaison())) {
                 logger.info("\nLa combinaison proposée par la machine est la combinaison secrète.");
-                victoireDefenseur = 2;
+                victoire = 2;
             } else {
                 logger.info("\nLa machine n'a pas découvert la combinaison secrète.");
-                victoireDefenseur = 1;
+                victoire = 1;
             }
-        combinaisonsAuto.getCombinaisonsAuto().clear();
-        comparaisonsListesManuelle.clear();
         }
     }

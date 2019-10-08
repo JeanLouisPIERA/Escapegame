@@ -16,42 +16,43 @@ import java.util.Random;
  * to run 2 of the 3 operatives patterns (JeuChallenger and JeuDefenseur)
  */
 
-public class CombinaisonsAuto{
+public class CombinaisonsAuto extends Combinaisons {
 
     static Logger logger = Logger.getLogger(CombinaisonsAuto.class);
-    private List<Integer> combinaisonsAuto;
-    private Combinaisons combinaisons = new Combinaisons();
-
+    private List<Integer> combinaison;
+    private Combinaisons combinaisons;
 
     public CombinaisonsAuto(Combinaisons combinaisons) {
         this(new ArrayList<>(), combinaisons);
     }
-    public CombinaisonsAuto(List<Integer> combinaisonsAuto, Combinaisons combinaisons) {
-        this.combinaisonsAuto = combinaisonsAuto;
+
+    public CombinaisonsAuto(List<Integer> combinaison, Combinaisons combinaisons) {
+        this.combinaison = combinaison;
         this.combinaisons = combinaisons;
     }
 
-    public List<Integer> getCombinaisonsAuto() {
-        return combinaisonsAuto;
+    @Override
+    public List<Integer> getCombinaison() {
+        return combinaison;
     }
 
     /**
      * This method enables to combine the results of automatic sorts in an indexed list.
      */
 
-    public void combinerAuto() {
-        while (this.combinaisonsAuto.size() < combinaisons.getNbCombinaisons()) {
+    public void combiner() {
+        while (this.combinaison.size() < combinaisons.getNbCombinaisons()) {
             try {
-                tirerAuto();
+                this.tirer();
             } catch (Exception e) {
                 logger.error(e);
             }
         }
     }
 
-    public void printCombinaisonsAuto() {
+    public void printCombinaison() {
         for (int i = 0; i < combinaisons.getNbCombinaisons(); i++) {
-            logger.info("Élément à l'index " + i + " = " + combinaisonsAuto.get(i));
+            logger.info("Élément à l'index " + i + " = " + combinaison.get(i));
         }
     }
 
@@ -65,12 +66,12 @@ public class CombinaisonsAuto{
      * This further development could give an extra interest to this Escape Game.
      */
 
-    public void tirerAuto() {
+    public void tirer() {
         Random r = new Random();
         int randint = Math.abs(r.nextInt()) % 10;
         /*logger.info(randint);*/
         try {
-            this.combinaisonsAuto.add(randint);
+            this.combinaison.add(randint);
         } catch (Exception e) {
             logger.error(e);
         }

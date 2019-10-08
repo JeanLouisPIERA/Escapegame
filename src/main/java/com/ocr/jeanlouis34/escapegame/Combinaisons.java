@@ -2,7 +2,9 @@ package com.ocr.jeanlouis34.escapegame;
 
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -18,14 +20,34 @@ import java.util.Scanner;
 public class Combinaisons {
 
     private int nbCombinaisons;
+    protected List<Integer> combinaison;
+    protected int tirage;
     static Logger logger = Logger.getLogger(Combinaisons.class);
 
     public Combinaisons() {
-        nbCombinaisons = 0;
+        this(0, new ArrayList<>(), 0);
     }
+
+    public Combinaisons(int nbCombinaisons, List<Integer> combinaison, int tirage) {
+        this.nbCombinaisons = nbCombinaisons;
+        this.combinaison = combinaison;
+        this.tirage = tirage;
+    }
+
+    /*public Combinaisons() {
+        nbCombinaisons = 0;
+    }*/
 
     public int getNbCombinaisons() {
         return nbCombinaisons;
+    }
+
+    public List<Integer> getCombinaison() {
+        return combinaison;
+    }
+
+    public int getTirage() {
+        return tirage;
     }
 
     /**
@@ -52,6 +74,22 @@ public class Combinaisons {
         } else {
             logger.info("Ta saisie n'est pas correcte. Je fixe donc la longueur de la combinaison secrète à 4 chiffres.");
             nbCombinaisons = 4;
+        }
+    }
+
+    public void combiner (List<Integer> combinaison) {
+        this.combinaison = combinaison;
+        logger.info("Création d'une combinaison sous forme d'une liste de longueur Nbcombinaisons et indexation dans l'Arraylist du tirage à la clé correspond au tour de tirage, par réitération le même nombre de fois que le Nbcombinaisons de la méthode tirer. ");
+    }
+
+    public void tirer (int tirage) {
+        this.tirage = tirage;
+        logger.info("Tirage d'un chiffre entier k compris entre 0 et 9 avant affectation dans une Arraylist.");
+    }
+
+    public void printCombinaison(){
+        for (int j = 0; j < this.nbCombinaisons; j++) {
+            logger.info("Élément à l'index " + j + " = " + combinaison.get(j));
         }
     }
 }
