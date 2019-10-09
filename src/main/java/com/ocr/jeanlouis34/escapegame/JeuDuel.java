@@ -22,29 +22,31 @@ import java.util.Scanner;
  * This clazs is one of the 5 classes of the first range (see javadoc of the Class JeuBegin) are invoked in the Class main.
  */
 
-public class JeuDuel {
+public class JeuDuel extends Jeu {
 
-    private int victoireJoueurDuel;
     private String ready1;
-    private JeuBegin jeubegin = new JeuBegin();
+    private int victoireDuel;
+    private int tourPartie;
+    private Jeu jeu = new Jeu();
     private JeuDefenseur jeudefenseur;
     private JeuChallenger jeuchallenger;
-    static Logger logger = Logger.getLogger(JeuChallenger.class);
+    static Logger logger = Logger.getLogger(JeuDuel.class);
 
-    public JeuDuel(JeuBegin jeubegin, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
-        this(0,"", jeubegin, jeudefenseur, jeuchallenger);
+    public JeuDuel (Jeu jeu, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
+        this("",0,0,jeu, jeudefenseur, jeuchallenger);
     }
 
-    public JeuDuel(int victoireJoueurDuel, String ready1, JeuBegin jeubegin, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
-        this.victoireJoueurDuel =victoireJoueurDuel;
+    public JeuDuel(String ready1, int victoireDuel, int tourPartie, Jeu jeu, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
         this.ready1 = ready1;
-        this.jeubegin = jeubegin;
+        this.victoireDuel = victoireDuel;
+        this.tourPartie = tourPartie;
+        this.jeu = jeu;
         this.jeudefenseur = jeudefenseur;
         this.jeuchallenger = jeuchallenger;
     }
 
-    public int getVictoireJoueurDuel() {
-        return victoireJoueurDuel;
+    public int getVictoireDuel() {
+        return victoireDuel;
     }
 
     /**
@@ -55,25 +57,25 @@ public class JeuDuel {
      * in this case, he can move back to the Main Menu and choose if he wants to play one of the another patterns.
      */
 
-    public void runJeuDuel() {
-            jeubegin.setNbTours(1) ;
+    public void runJeu() {
+            jeu.setNbTours(1) ;
             logger.info("Pour éviter de jouer jusqu'à l'infini, le nombre de tours maximum de la partie a été fixé à 100");
             logger.info("On va aussi te demander régulièrement si tu veux mettre fin à la partie DUEL.");
             String OUI = "OUI";
             do {
                 logger.info("\nOn commence par le mode Challenger.\n");
-                jeuchallenger.runJeuChallenger();
-                if (jeuchallenger.getVictoireJoueur() == 1) {
-                    victoireJoueurDuel =1;
+                jeuchallenger.runJeu();
+                if (jeuchallenger.getVictoire() == 1) {
+                    victoireDuel =1;
                 } else {
-                    victoireJoueurDuel = 2;
-                }
-                logger.info("\nOn passe maintenant au mode Défenseur.\n");
-                jeudefenseur.runJeuDefenseur();
-                 if (jeudefenseur.getVictoireJoueurDef() == 2) {
-                     victoireJoueurDuel = 3;
-                } else {
-                     victoireJoueurDuel = 4;
+                    victoireDuel = 2;
+                    logger.info("\nOn passe maintenant au mode Défenseur.\n");
+                    jeudefenseur.runJeu();
+                    if (jeudefenseur.getVictoire() == 2) {
+                        victoireDuel = 3;
+                    } else {
+                        victoireDuel = 4;
+                    }
                 }
                 logger.info("Si tu veux continuer à jouer cette partie de DUEL, réponds OUI : ");
                 Scanner sc = new Scanner(System.in);
@@ -86,7 +88,7 @@ public class JeuDuel {
                 }
             }while(ready1.equals(OUI));
             logger.info("Tu as décidé de mettre fin à cette partie en mode Duel. C'est noté.");
-            victoireJoueurDuel = 5;
+            victoireDuel = 5;
         }
     }
 

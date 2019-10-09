@@ -5,40 +5,42 @@ import org.apache.log4j.Logger;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * This class defines the characteristics of the whole game :
- * the name of the human player known as Player Joueur or the player (opposed to the Machine or Player Machine)
- *
- * the 3 different game patterns that is :
- * Challenger pattern: the Player has to find out the combinaison created by the Machine,
- * Defenseur pattern : the Machine has to find out the combinaison created by the Player,
- * Duel pattern : both other patterns are played each one after the other, beginning with the Challenge pattern
- *
- * the number of rounds of each pattern
- * the Duel pattern is not limited but by a maximum number of 100 rounds, in which the round of each other pattern is 1
- *
- * This class objects are instanced in classes JeuChallenger, JeuDefenseur, JeuDuel, JeuEnd.
- * Only this 5 classes of the first range are invoked in the Class main.
- */
+public class Jeu {
 
-public class JeuBegin {
-
+    static Logger logger = Logger.getLogger(Jeu.class);
     private String nomJoueur;
     private int modeJeu;
     private int nbTours;
-    static Logger logger = Logger.getLogger(JeuBegin.class);
+    private String ready;
+    private int choixJeu;
+    private int victoire;
+    private int tourPartie;
+    private String ready1;
+    private String modeDeveloper;
 
-    public JeuBegin() {
-        nomJoueur = "";
-        modeJeu = 0;
-        nbTours = 0;
+    public Jeu() {
+        this("",0,0,"",0, 0, 0, "", "");
     }
 
-    public JeuBegin(String nomJoueur, int modeJeu, int nbTours) {
+    public Jeu(String nomJoueur, int modeJeu, int nbTours, String ready, int choixJeu, int victoire, int tourPartie, String ready1, String modeDeveloper) {
         this.nomJoueur = nomJoueur;
         this.modeJeu = modeJeu;
         this.nbTours = nbTours;
-        }
+        this.ready = ready;
+        this.choixJeu = choixJeu;
+        this.victoire = victoire;
+        this.tourPartie = tourPartie;
+        this.ready1 = ready1;
+        this.modeDeveloper = modeDeveloper;
+    }
+
+    /**
+     * This abstract method is only taken over in the sub classes of the Class Jeu that is JeuChallenger, JeuDefenseur & JeuDuel
+     */
+
+    public void runJeu() {
+        logger.info("Je choisis le mode Jeu de ma partie entre les 3 modes possibles = Challenger, Defenseur ou Duel");
+    }
 
     public String getNomJoueur() {
         return nomJoueur;
@@ -131,6 +133,22 @@ public class JeuBegin {
         logger.info("\nAlors dis moi" + this.getNomJoueur() + ", quelle est ta décision ? Ecris ici le numéro de ton choix :");
     }
 
+    public String getModeDeveloper() {
+        return modeDeveloper;
+    }
+
+    /**
+            * This is a sub-method of the displaySeletedModeJeu which is a sub-method of the Class runModeJeu
+     */
+
+    public void modeDeveloper() {
+        Scanner sc = new Scanner(System.in);
+        logger.info("\nPour tester toutes les capacités du jeu, tu as la possibilité de jouer en mode Développeur. \nEn mode Développeur, la combinaison secrète est dévoilée au joueur attaquant ...");
+        logger.info("Si tu choisis le mode Développeur, tape OUI :");
+        this.modeDeveloper = sc.nextLine();
+        logger.info("C'est noté. Je te remercie " + this.nomJoueur + "! ");
+    }
+
     /**
      * This is a sub-method of the method of this Class runModeJeu
      */
@@ -139,17 +157,20 @@ public class JeuBegin {
         switch (modeJeu) {
             case 1:
                 logger.info("Tu as choisi de jouer en mode CHALLENGER. A toi de trouver la combinaison secrète. Que la Force soit avec toi !");
+                modeDeveloper();
                 logger.info("\nEn combien de tours veux-tu jouer cette partie ?");
                 addNbTours();
                 break;
             case 2:
                 logger.info("Tu as choisi de jouer en mode DEFENSEUR. Tous mes voeux pour que ta combinaison secrète ne soit pas découverte !");
+                modeDeveloper();
                 logger.info("\nEn combien de tours veux-tu jouer cette partie ?");
                 addNbTours();
                 break;
             case 3:
                 logger.info("Tu as choisi de jouer en mode DUEL. On va alterner les modes Challenger et Défenseur à tour de rôle jusqu'à ce que l'un des joueurs l'emporte.");
                 nbTours = 100;
+                modeDeveloper();
                 break;
             default:
                 logger.info("Ne réponds pas n'importe quoi pour éviter le combat. Pour que tu comprennes bien, bis repetita ...");
@@ -164,8 +185,56 @@ public class JeuBegin {
      */
 
     public void runModeJeu() {
-            this.displayAvailableModeJeu();
-            addModeJeu();
-            this.displaySelectedModeJeu();
+        this.displayAvailableModeJeu();
+        addModeJeu();
+        this.displaySelectedModeJeu();
+    }
+
+    public String getReady() {
+        return ready;
+    }
+
+    /**
+     * The lone method of the class
+     * This method enables to choose one more time between the three operative patterns.
+     */
+
+    public void finirlapartie() {
+        logger.info("La précédente partie est finie. \nQue veux tu faire maintenant ?");
+        logger.info("Si tu veux continuer à jouer, réponds OUI : ");
+        String OUI = "OUI";
+        Scanner sc = new Scanner(System.in);
+        try {
+            ready = sc.nextLine();
+        } catch (InputMismatchException e) {
+            logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
+            sc.next();
+            ready = sc.nextLine();
+        }
+        if (ready.equals(OUI)) {
+            logger.info("Quel mode de jeu souhaites-tu jouer ? Un patit rappel.");
+            runModeJeu();
+            switch (modeJeu) {
+                case 1:
+                    choixJeu = 1;
+                    break;
+                case 2:
+                    choixJeu = 2;
+                    break;
+                case 3:
+                    choixJeu = 3;
+                    break;
+                default:
+                    logger.info("Ne réponds pas n'importe quoi pour éviter le combat. Pour que tu comprennes bien, bis repetita ...");
+                    finirlapartie();
+                    break;
+            }
+        } else {
+            logger.info("Tu as choisi de quitter l'application. J'espère te revoir bientôt et te souhaite une bonne journée " + nomJoueur);
+            System.exit(0);
+        }
     }
 }
+
+
+

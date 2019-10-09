@@ -80,6 +80,4 @@ public class CombinaisonManuelle extends Combinaisons{
             logger.info("Élément à l'index " + j + " = " + combinaison.get(j));
         }
     }
-
-
 }

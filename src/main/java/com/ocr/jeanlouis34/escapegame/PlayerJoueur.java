@@ -31,7 +31,6 @@ public class PlayerJoueur implements Player {
     private Combinaisons combinaisons;
     private CombinaisonsAuto combinaisonsAuto;
     private CombinaisonManuelle combinaisonManuelle ;
-    private JeuBegin jeubegin = new JeuBegin();
 
     public PlayerJoueur(Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
         this(0,0,0,"",new ArrayList<>(), combinaisons, combinaisonsAuto, combinaisonManuelle);
@@ -70,7 +69,6 @@ public class PlayerJoueur implements Player {
      */
 
     public void comparerLesListes() {
-        logger.info("\nComparons step by step les 2 combinaisons ...");
         for (int k = 0; k < combinaisons.getNbCombinaisons(); k++) {
             int K = k + 1;
             this.ca = (Integer) combinaisonsAuto.getCombinaison().get(k);

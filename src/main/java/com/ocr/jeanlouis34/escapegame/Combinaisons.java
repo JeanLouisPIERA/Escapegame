@@ -34,20 +34,12 @@ public class Combinaisons {
         this.tirage = tirage;
     }
 
-    /*public Combinaisons() {
-        nbCombinaisons = 0;
-    }*/
-
     public int getNbCombinaisons() {
         return nbCombinaisons;
     }
 
     public List<Integer> getCombinaison() {
         return combinaison;
-    }
-
-    public int getTirage() {
-        return tirage;
     }
 
     /**

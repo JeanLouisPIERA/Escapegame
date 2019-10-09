@@ -9,41 +9,40 @@ public class Main {
 
         Logger logger = Logger.getLogger(Main.class);
 
-        JeuBegin jeubegin = new JeuBegin();
-        JeuEnd jeuEnd = new JeuEnd(jeubegin);
-        JeuChallenger jeuChallenger = new JeuChallenger(jeubegin, jeuEnd);
-        JeuDefenseur jeuDefenseur = new JeuDefenseur(jeubegin, jeuEnd);
-        JeuDuel jeuDuel = new JeuDuel(jeubegin, jeuDefenseur, jeuChallenger);
+        Jeu jeu = new Jeu();
+        JeuChallenger jeuChallenger = new JeuChallenger(jeu);
+        JeuDefenseur jeuDefenseur = new JeuDefenseur(jeu);
+        JeuDuel jeuDuel = new JeuDuel(jeu, jeuDefenseur, jeuChallenger);
 
-        jeubegin.addNomJoueur();
-        jeubegin.runModeJeu();
+        jeu.addNomJoueur();
+        jeu.runModeJeu();
         do {
-            switch (jeubegin.getModeJeu()) {
+            switch (jeu.getModeJeu()) {
                 case 1:
-                    jeuChallenger.runJeuChallenger();
-                    if (jeuChallenger.getVictoireJoueur() == 1 || jeuChallenger.getTourPartie() == jeubegin.getNbTours()) {
-                        jeuEnd.finirlapartie();
+                    jeuChallenger.runJeu();
+                    if (jeuChallenger.getVictoire() == 1 || jeuChallenger.getTourPartie() == jeu.getNbTours()) {
+                        jeu.finirlapartie();
                     }
                     break;
                 case 2:
-                    jeuDefenseur.runJeuDefenseur();
-                    if (jeuDefenseur.getVictoireJoueurDef() == 2 || jeuDefenseur.getTourPartie1() == jeubegin.getNbTours()) {
-                        jeuEnd.finirlapartie();
+                    jeuDefenseur.runJeu();
+                    if (jeuDefenseur.getVictoire() == 2 || jeuDefenseur.getTourPartie() == jeu.getNbTours()) {
+                        jeu.finirlapartie();
                     }
                     break;
                 case 3:
-                    jeuDuel.runJeuDuel();
-                    switch (jeuDuel.getVictoireJoueurDuel()) {
+                    jeuDuel.runJeu();
+                    switch (jeuDuel.getVictoireDuel()) {
                         case 1 :
                         case 3 :
                         case 5 :
-                            jeuEnd.finirlapartie();
+                            jeu.finirlapartie();
                             break;
                         case 2 :
-                            jeuDefenseur.runJeuDefenseur();
+                            jeuDefenseur.runJeu();
                             break;
                         case 4 :
-                            jeuChallenger.runJeuChallenger();
+                            jeuChallenger.runJeu();
                             break;
                     }
                     break;
@@ -52,7 +51,7 @@ public class Main {
                     System.exit(1);
                     break;
             }
-        } while (jeuEnd.getReady().equals("OUI"));
+        } while (jeu.getReady().equals("OUI"));
     }
 }
 

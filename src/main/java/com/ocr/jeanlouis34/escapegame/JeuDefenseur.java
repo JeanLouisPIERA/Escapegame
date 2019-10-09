@@ -19,35 +19,33 @@ import org.apache.log4j.Logger;
  * This class is one of the 5 classes of the first range (see javadoc of the Class JeuBegin)are invoked in the Class main.
  */
 
-public class JeuDefenseur {
+public class JeuDefenseur extends Jeu {
 
-    private int victoireJoueurDef;
-    private int tourPartie1;
-    private JeuBegin jeubegin = new JeuBegin();
+    private int victoire;
+    private int tourPartie;
+    private Jeu jeu;
     private Combinaisons combinaisons = new Combinaisons();
     private CombinaisonsAuto combinaisonsAuto = new CombinaisonsAuto(combinaisons);
     private CombinaisonManuelle combinaisonManuelle = new CombinaisonManuelle(combinaisons);
     private PlayerJoueur playerJoueur = new PlayerJoueur(combinaisons, combinaisonsAuto, combinaisonManuelle);
-    private JeuEnd jeuEnd = new JeuEnd(jeubegin);
-    static Logger logger = Logger.getLogger(JeuChallenger.class);
+    static Logger logger = Logger.getLogger(JeuDefenseur.class);
 
-    public JeuDefenseur(JeuBegin jeubegin, JeuEnd jeuEnd) {
-        this(0, 0, jeubegin, jeuEnd);
+    public JeuDefenseur (Jeu jeu){
+        this(0,0,jeu);
     }
 
-    public JeuDefenseur(int victoireJoueurDef, int tourPartie1, JeuBegin jeubegin, JeuEnd jeuEnd) {
-        this.victoireJoueurDef = victoireJoueurDef;
-        this.tourPartie1 = tourPartie1;
-        this.jeubegin = jeubegin;
-        this.jeuEnd = jeuEnd;
+    public JeuDefenseur(int victoire, int tourPartie, Jeu jeu) {
+        this.victoire = victoire;
+        this.tourPartie = tourPartie;
+        this.jeu = jeu;
     }
 
-    public int getTourPartie1() {
-        return tourPartie1;
+    public int getTourPartie() {
+        return tourPartie;
     }
 
-    public int getVictoireJoueurDef() {
-        return victoireJoueurDef;
+    public int getVictoire() {
+        return victoire;
     }
 
     /**
@@ -59,27 +57,30 @@ public class JeuDefenseur {
      * The loggers have not been erased to enable to test the program in his different issues
      */
 
-    public void runJeuDefenseur() {
-        tourPartie1 = 0;
+    public void runJeu() {
+        tourPartie = 0;
         combinaisonManuelle.getCombinaison().clear();
         combinaisonsAuto.getCombinaison().clear();
         combinaisons.addNbCombinaisons();
         combinaisonManuelle.combiner();
         do {
-                /*combinaisonManuelle.printCombinaisonManuelle();*/
+            if (jeu.getModeDeveloper().equals("OUI")) {
+                logger.info("\nJe rapelle que ta combinaison secrète est :");
+                combinaisonManuelle.printCombinaison();
+                logger.info("\nComparons step by step les 2 combinaisons ...");
+            }
                 combinaisonsAuto.combiner();
-                /*combinaisonsAuto.printCombinaisonsAuto();*/
                 playerJoueur.comparerLesListes();
-                tourPartie1++;
+                tourPartie++;
                 if (playerJoueur.getVictoire() == 1) {
-                    victoireJoueurDef = 1;
-                    logger.info("Bravo " + jeubegin.getNomJoueur() + ". Tu t'es bien défendu.");
+                    victoire = 1;
+                    logger.info("Bravo " + jeu.getNomJoueur() + ". Tu t'es bien défendu.");
                 } else if (playerJoueur.getVictoire() == 2) {
-                    victoireJoueurDef = 2;
-                    logger.info("Désolé " + jeubegin.getNomJoueur() + ". Le Player Machine a été plus fort que toi.");
+                    victoire = 2;
+                    logger.info("Désolé " + jeu.getNomJoueur() + ". Le Player Machine a été plus fort que toi.");
                 }
             }
-            while (victoireJoueurDef == 1 && tourPartie1 < jeubegin.getNbTours());
+            while (victoire == 1 && tourPartie < jeu.getNbTours());
         }
     }
 
