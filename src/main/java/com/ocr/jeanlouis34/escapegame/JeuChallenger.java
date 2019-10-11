@@ -68,6 +68,7 @@ public class JeuChallenger extends Jeu {
         combinaisonManuelle.getCombinaison().clear();
         combinaisonsAuto.getCombinaison().clear();
         combinaisons.addNbCombinaisons();
+        combinaisons.printNbcombinaisons();
         combinaisonsAuto.combiner();
             do {
                 if (jeu.getModeDeveloper().equals("OUI")) {

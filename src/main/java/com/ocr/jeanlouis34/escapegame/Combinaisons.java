@@ -54,18 +54,20 @@ public class Combinaisons {
         try {
             logger.info("Attention, pense à entrer un nombre chiffre positif entre 2 et 9 ...");
             this.nbCombinaisons = sc.nextInt();
-
         } catch (InputMismatchException ex) {
             logger.error("La saisie n'est pas correcte. On recommence à zéro ...");
             sc.next();
             addNbCombinaisons();
         }
+    }
+
+    public void printNbcombinaisons() {
         if (nbCombinaisons <= 9 && nbCombinaisons > 1) {
-            logger.info("C'est noté. \nTu as décidé que la combinaison secrète auras une longueur de " + nbCombinaisons +"  chiffres.");
+            logger.info("C'est noté. \nTu as décidé que la combinaison secrète auras une longueur de " + this.nbCombinaisons +"  chiffres.");
             logger.info("Pour connaitre le nombre de combinaisons possibles, multiplie 10 par lui même autant de fois que tu as choisi de chiffres dans ta combinaison");
         } else {
             logger.info("Ta saisie n'est pas correcte. Je fixe donc la longueur de la combinaison secrète à 4 chiffres.");
-            nbCombinaisons = 4;
+            this.nbCombinaisons = 4;
         }
     }
 

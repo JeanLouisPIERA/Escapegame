@@ -15,6 +15,7 @@ public class Main {
         JeuDuel jeuDuel = new JeuDuel(jeu, jeuDefenseur, jeuChallenger);
 
         jeu.addNomJoueur();
+        jeu.printNomJoueur();
         jeu.runModeJeu();
         do {
             switch (jeu.getModeJeu()) {

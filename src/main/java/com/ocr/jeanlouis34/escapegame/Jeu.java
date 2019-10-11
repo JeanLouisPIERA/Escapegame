@@ -55,6 +55,9 @@ public class Jeu {
         Scanner sc = new Scanner(System.in);
         logger.info("Bonjour à toi! \nBienvenue dans ce nouvel Escape Game. Dis moi, quel est ton nom ?");
         this.nomJoueur = sc.nextLine();
+    }
+
+    public void printNomJoueur() {
         logger.info("C'est noté. Je te remercie" + this.nomJoueur + "! \n ");
         logger.info("Dans ce jeu, le Player Machine ou toi, vous devrez découvrir une combinaison secrète de plusieurs chiffres.");
         logger.info("Entre le Player Machine et toi, à la fin, il ne peut en rester qu'un.");
@@ -107,17 +110,20 @@ public class Jeu {
         try {
             logger.info("Tu peux choisir jusqu'à 9 tours. \nAttention, pense bien à entrer un chiffre positif ...");
             this.nbTours = sc.nextInt();
-            if (nbTours <= 9) {
-                logger.info("Tu as choisi de jouer ta partie en " + this.nbTours + "\nOn continue ...");
-            } else {
-                logger.info("Ta saisie n'est pas correcte. Je décide donc de fixer le nombre de tours à 5.");
-                this.nbTours = 5;
-            }
         } catch (InputMismatchException ex) {
             logger.error("La saisie n'est pas correcte. On recommence à zéro ...");
             nbTours = 0;
             sc.next();
             addNbTours();
+        }
+    }
+
+    public void printNbTours() {
+        if (nbTours <= 9) {
+            logger.info("Tu as choisi de jouer ta partie en " + this.nbTours + "\nOn continue ...");
+        } else {
+            logger.info("Ta saisie n'est pas correcte. Je décide donc de fixer le nombre de tours à 5.");
+            this.nbTours = 5;
         }
     }
 
@@ -160,12 +166,14 @@ public class Jeu {
                 modeDeveloper();
                 logger.info("\nEn combien de tours veux-tu jouer cette partie ?");
                 addNbTours();
+                printNbTours();
                 break;
             case 2:
                 logger.info("Tu as choisi de jouer en mode DEFENSEUR. Tous mes voeux pour que ta combinaison secrète ne soit pas découverte !");
                 modeDeveloper();
                 logger.info("\nEn combien de tours veux-tu jouer cette partie ?");
                 addNbTours();
+                printNbTours();
                 break;
             case 3:
                 logger.info("Tu as choisi de jouer en mode DUEL. On va alterner les modes Challenger et Défenseur à tour de rôle jusqu'à ce que l'un des joueurs l'emporte.");
