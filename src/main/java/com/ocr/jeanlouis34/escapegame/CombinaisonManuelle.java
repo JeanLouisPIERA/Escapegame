@@ -48,11 +48,7 @@ public class CombinaisonManuelle extends Combinaisons{
         /*logger.info("Ici le Player Machine. Je rappelle que la combinaison secrète a une longueur de " + combinaisons.getNbCombinaisons() + " chiffres.");*/
         logger.info("\nA toi de proposer une combinaison. \nAttention tu ne peux saisir que des chiffres entre 0 et 9. \nSinon la machine n'enregistrera que le premier chiffre que tu saisiras.");
         while (this.combinaison.size() < combinaisons.getNbCombinaisons())
-            try {
-                this.tirer();
-            } catch (Exception e) {
-                logger.error(e);
-            }
+            this.tirer();
     }
 
     /**

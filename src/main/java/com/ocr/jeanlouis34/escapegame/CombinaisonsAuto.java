@@ -42,11 +42,7 @@ public class CombinaisonsAuto extends Combinaisons {
 
     public void combiner() {
         while (this.combinaison.size() < combinaisons.getNbCombinaisons()) {
-            try {
-                this.tirer();
-            } catch (Exception e) {
-                logger.error(e);
-            }
+            this.tirer();
         }
     }
 
@@ -69,12 +65,7 @@ public class CombinaisonsAuto extends Combinaisons {
     public void tirer() {
         Random r = new Random();
         int randint = Math.abs(r.nextInt()) % 10;
-        /*logger.info(randint);*/
-        try {
             this.combinaison.add(randint);
-        } catch (Exception e) {
-            logger.error(e);
-        }
     }
 }
 
