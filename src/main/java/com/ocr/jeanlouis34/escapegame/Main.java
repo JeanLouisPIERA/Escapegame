@@ -3,32 +3,33 @@ package com.ocr.jeanlouis34.escapegame;
 
 import org.apache.log4j.Logger;
 
+
 public class Main {
 
     public static void main(String[] args) {
 
         Logger logger = Logger.getLogger(Main.class);
 
-        Jeu jeu = new Jeu();
-        JeuChallenger jeuChallenger = new JeuChallenger(jeu);
-        JeuDefenseur jeuDefenseur = new JeuDefenseur(jeu);
-        JeuDuel jeuDuel = new JeuDuel(jeu, jeuDefenseur, jeuChallenger);
+        JeuParams jeuParams = new JeuParams();
+        JeuChallenger jeuChallenger = new JeuChallenger(jeuParams);
+        JeuDefenseur jeuDefenseur = new JeuDefenseur(jeuParams);
+        JeuDuel jeuDuel = new JeuDuel(jeuParams, jeuDefenseur, jeuChallenger);
 
-        jeu.addNomJoueur();
-        jeu.printNomJoueur();
-        jeu.runModeJeu();
+        jeuParams.addNomJoueur();
+        jeuParams.printNomJoueur();
+        jeuParams.runModeJeu();
         do {
-            switch (jeu.getModeJeu()) {
+            switch (jeuParams.getModeJeu()) {
                 case 1:
                     jeuChallenger.runJeu();
-                    if (jeuChallenger.getVictoire() == 1 || jeuChallenger.getTourPartie() == jeu.getNbTours()) {
-                        jeu.finirlapartie();
+                    if (jeuChallenger.getVictoire() == 1 || jeuChallenger.getTourPartie() == jeuParams.getNbTours()) {
+                        jeuParams.finirlapartie();
                     }
                     break;
                 case 2:
                     jeuDefenseur.runJeu();
-                    if (jeuDefenseur.getVictoire() == 2 || jeuDefenseur.getTourPartie() == jeu.getNbTours()) {
-                        jeu.finirlapartie();
+                    if (jeuDefenseur.getVictoire() == 2 || jeuDefenseur.getTourPartie() == jeuParams.getNbTours()) {
+                        jeuParams.finirlapartie();
                     }
                     break;
                 case 3:
@@ -37,7 +38,7 @@ public class Main {
                         case 1 :
                         case 3 :
                         case 5 :
-                            jeu.finirlapartie();
+                            jeuParams.finirlapartie();
                             break;
                         case 2 :
                             jeuDefenseur.runJeu();
@@ -52,7 +53,7 @@ public class Main {
                     System.exit(1);
                     break;
             }
-        } while (jeu.getReady().equals("OUI"));
+        } while (jeuParams.getReady().equals("OUI"));
     }
 }
 

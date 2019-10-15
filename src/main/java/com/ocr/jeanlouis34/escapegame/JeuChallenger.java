@@ -21,25 +21,25 @@ import org.apache.log4j.Logger;
  * This class is one of the 5 classes of the first range (see javadoc of the Class JeuBegin) are invoked in the Class main.
  */
 
-public class JeuChallenger extends Jeu {
+public class JeuChallenger implements Jeu {
 
     private int victoire;
     private int tourPartie;
-    private Jeu jeu;
-    private Combinaisons combinaisons = new Combinaisons();
-    private CombinaisonsAuto combinaisonsAuto = new CombinaisonsAuto(combinaisons);
-    private CombinaisonManuelle combinaisonManuelle = new CombinaisonManuelle(combinaisons);
-    private PlayerMachine playerMachine = new PlayerMachine(combinaisons, combinaisonsAuto, combinaisonManuelle);
+    private JeuParams jeuParams = new JeuParams();
+    private CombinaisonsParams combinaisonsParams = new CombinaisonsParams();
+    private CombinaisonsAuto combinaisonsAuto = new CombinaisonsAuto(combinaisonsParams);
+    private CombinaisonManuelle combinaisonManuelle = new CombinaisonManuelle(combinaisonsParams);
+    private PlayerMachine playerMachine = new PlayerMachine(combinaisonsParams, combinaisonsAuto, combinaisonManuelle);
     static Logger logger = Logger.getLogger(JeuChallenger.class);
 
-    public JeuChallenger(Jeu jeu) {
-        this(0,0, jeu);
+    public JeuChallenger(JeuParams jeuParams) {
+        this(0,0,jeuParams);
     }
 
-    public JeuChallenger(int victoire, int tourPartie, Jeu jeu) {
+    public JeuChallenger(int victoire, int tourPartie, JeuParams jeuParams) {
         this.victoire = victoire;
         this.tourPartie = tourPartie;
-        this.jeu = jeu;
+        this.jeuParams = jeuParams;
     }
 
     public int getTourPartie() {
@@ -63,15 +63,16 @@ public class JeuChallenger extends Jeu {
      * The loggers have not been erased to enable to test the program in his different issues
      */
 
+    @Override
     public void runJeu() {
         tourPartie = 0;
         combinaisonManuelle.getCombinaison().clear();
         combinaisonsAuto.getCombinaison().clear();
-        combinaisons.addNbCombinaisons();
-        combinaisons.printNbcombinaisons();
+        combinaisonsParams.addNbCombinaisons();
+        combinaisonsParams.printNbcombinaisons();
         combinaisonsAuto.combiner();
             do {
-                if (jeu.getModeDeveloper().equals("OUI")) {
+                if (jeuParams.getModeDeveloper().equals("OUI")) {
                     logger.info("\nLa combinaison secrète de la Machine est :");
                     combinaisonsAuto.printCombinaison();
                     logger.info("\nComparons step by step les 2 combinaisons ...");
@@ -81,13 +82,13 @@ public class JeuChallenger extends Jeu {
                 tourPartie++;
                 if (playerMachine.getVictoire() == 1) {
                     victoire = 1;
-                    logger.info("Bravo " + jeu.getNomJoueur() + ". Tu as gagné.");
+                    logger.info("Bravo " + jeuParams.getNomJoueur() + ". Tu as gagné.");
                 } else if (playerMachine.getVictoire() == 2) {
                     victoire = 2;
-                    logger.info("Désolé " + jeu.getNomJoueur() + ". Tu n'as pas gagné.");
+                    logger.info("Désolé " + jeuParams.getNomJoueur() + ". Tu n'as pas gagné.");
                 }
             }
-            while (victoire == 2 && tourPartie < jeu.getNbTours());
-        }
+        while (victoire == 2 && tourPartie < jeuParams.getNbTours());
     }
+}
 

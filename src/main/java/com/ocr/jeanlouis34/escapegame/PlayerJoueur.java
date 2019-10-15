@@ -28,22 +28,21 @@ public class PlayerJoueur implements Player {
     private int cm;
     private String cr;
     private List<String> comparaisonsListes;
-    private Combinaisons combinaisons;
+    private CombinaisonsParams combinaisonsParams;
     private CombinaisonsAuto combinaisonsAuto;
     private CombinaisonManuelle combinaisonManuelle ;
 
-    public PlayerJoueur(Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
-        this(0,0,0,"",new ArrayList<>(), combinaisons, combinaisonsAuto, combinaisonManuelle);
+    public PlayerJoueur(CombinaisonsParams combinaisonsParams, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
+        this(0,0,0,"",new ArrayList<>(),combinaisonsParams, combinaisonsAuto, combinaisonManuelle);
     }
 
-
-    public PlayerJoueur(int victoire, int ca, int cm, String cr, List<String> comparaisonsListes, Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
+    public PlayerJoueur(int victoire, int ca, int cm, String cr, List<String> comparaisonsListes, CombinaisonsParams combinaisonsParams, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
         this.victoire = victoire;
         this.ca = ca;
         this.cm = cm;
         this.cr = cr;
         this.comparaisonsListes = comparaisonsListes;
-        this.combinaisons = combinaisons;
+        this.combinaisonsParams = combinaisonsParams;
         this.combinaisonsAuto = combinaisonsAuto;
         this.combinaisonManuelle = combinaisonManuelle;
     }
@@ -69,7 +68,7 @@ public class PlayerJoueur implements Player {
      */
 
     public void comparerLesListes() {
-        for (int k = 0; k < combinaisons.getNbCombinaisons(); k++) {
+        for (int k = 0; k < combinaisonsParams.getNbCombinaisons(); k++) {
             int K = k + 1;
             this.ca = (Integer) combinaisonsAuto.getCombinaison().get(k);
             logger.info("\nLe chiffre proposé par la machine en position " + K + " est : " + ca);

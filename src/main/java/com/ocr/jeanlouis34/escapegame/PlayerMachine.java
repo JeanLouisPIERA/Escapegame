@@ -20,20 +20,18 @@ public class PlayerMachine implements Player {
     static Logger logger = Logger.getLogger(PlayerMachine.class);
     private int victoire;
     private List<String> comparaisonsListes;
-    private Combinaisons combinaisons;
+    private CombinaisonsParams combinaisonsParams;
     private CombinaisonsAuto combinaisonsAuto;
     private CombinaisonManuelle combinaisonManuelle;
 
-
-    public PlayerMachine(Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
-        this(0, new ArrayList<>(),combinaisons, combinaisonsAuto, combinaisonManuelle);
-
+    public PlayerMachine(CombinaisonsParams combinaisonsParams, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
+        this(0,new ArrayList<>(), combinaisonsParams, combinaisonsAuto, combinaisonManuelle);
     }
 
-    public PlayerMachine(int victoire, List<String> comparaisonsListes, Combinaisons combinaisons, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
+    public PlayerMachine(int victoire, List<String> comparaisonsListes, CombinaisonsParams combinaisonsParams, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
         this.victoire = victoire;
         this.comparaisonsListes = comparaisonsListes;
-        this.combinaisons = combinaisons;
+        this.combinaisonsParams = combinaisonsParams;
         this.combinaisonsAuto = combinaisonsAuto;
         this.combinaisonManuelle = combinaisonManuelle;
     }
@@ -63,7 +61,7 @@ public class PlayerMachine implements Player {
         String A = "=";
         String B = "-";
         String C = "+";
-        for (int k = 0; k < combinaisons.getNbCombinaisons(); k++) {
+        for (int k = 0; k < combinaisonsParams.getNbCombinaisons(); k++) {
             int cm = (Integer) combinaisonManuelle.getCombinaison().get(k);
             int ca = (Integer) combinaisonsAuto.getCombinaison().get(k);
             if (cm == ca) {

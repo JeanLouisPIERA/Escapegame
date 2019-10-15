@@ -2,7 +2,6 @@ package com.ocr.jeanlouis34.escapegame;
 
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -19,37 +18,35 @@ import java.util.Random;
 public class CombinaisonsAuto extends Combinaisons {
 
     static Logger logger = Logger.getLogger(CombinaisonsAuto.class);
-    private List<Integer> combinaison;
-    private Combinaisons combinaisons;
 
-    public CombinaisonsAuto(Combinaisons combinaisons) {
-        this(new ArrayList<>(), combinaisons);
+    public CombinaisonsAuto(CombinaisonsParams combinaisonsParams) {
+        super(combinaisonsParams);
     }
 
-    public CombinaisonsAuto(List<Integer> combinaison, Combinaisons combinaisons) {
-        this.combinaison = combinaison;
-        this.combinaisons = combinaisons;
+    public CombinaisonsAuto(List<Integer> combinaison, int tirage, CombinaisonsParams combinaisonsParams) {
+        super(combinaison, tirage, combinaisonsParams);
     }
 
-    @Override
     public List<Integer> getCombinaison() {
         return combinaison;
     }
 
     /**
-     * This method enables to combine the results of automatic sorts in an indexed list.
+     * This method enables to combine the results of sorts in an indexed list.
+     * It is identically shared by all the subclasses Combinaisons.
      */
 
     public void combiner() {
-        while (this.combinaison.size() < combinaisons.getNbCombinaisons()) {
-            this.tirer();
-        }
+        super.combiner(combinaison);
     }
 
+    /**
+     * This method enables to print the combinaison obtained by the method combiner.
+     * It is identically shared by all the subclasses Combinaisons.
+     */
+
     public void printCombinaison() {
-        for (int i = 0; i < combinaisons.getNbCombinaisons(); i++) {
-            logger.info("Élément à l'index " + i + " = " + combinaison.get(i));
-        }
+        super.printCombinaison();
     }
 
 
@@ -62,6 +59,7 @@ public class CombinaisonsAuto extends Combinaisons {
      * This further development could give an extra interest to this Escape Game.
      */
 
+    @Override
     public void tirer() {
         Random r = new Random();
         int randint = Math.abs(r.nextInt()) % 10;

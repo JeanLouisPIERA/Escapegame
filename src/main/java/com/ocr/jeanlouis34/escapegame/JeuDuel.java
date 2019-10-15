@@ -22,25 +22,25 @@ import java.util.Scanner;
  * This clazs is one of the 5 classes of the first range (see javadoc of the Class JeuBegin) are invoked in the Class main.
  */
 
-public class JeuDuel extends Jeu {
+public class JeuDuel implements Jeu {
 
     private String ready1;
     private int victoireDuel;
     private int tourPartie;
-    private Jeu jeu = new Jeu();
+    private JeuParams jeuParams = new JeuParams();
     private JeuDefenseur jeudefenseur;
     private JeuChallenger jeuchallenger;
     static Logger logger = Logger.getLogger(JeuDuel.class);
 
-    public JeuDuel (Jeu jeu, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
-        this("",0,0,jeu, jeudefenseur, jeuchallenger);
+    public JeuDuel (JeuParams jeuParams, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
+        this("",0,0,jeuParams, jeudefenseur, jeuchallenger);
     }
 
-    public JeuDuel(String ready1, int victoireDuel, int tourPartie, Jeu jeu, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
+    public JeuDuel(String ready1, int victoireDuel, int tourPartie, JeuParams jeuParams, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
         this.ready1 = ready1;
         this.victoireDuel = victoireDuel;
         this.tourPartie = tourPartie;
-        this.jeu = jeu;
+        this.jeuParams = jeuParams;
         this.jeudefenseur = jeudefenseur;
         this.jeuchallenger = jeuchallenger;
     }
@@ -57,40 +57,41 @@ public class JeuDuel extends Jeu {
      * in this case, he can move back to the Main Menu and choose if he wants to play one of the another patterns.
      */
 
+    @Override
     public void runJeu() {
-            jeu.setNbTours(1) ;
-            logger.info("Pour éviter de jouer jusqu'à l'infini, le nombre de tours maximum de la partie a été fixé à 100");
-            logger.info("On va aussi te demander régulièrement si tu veux mettre fin à la partie DUEL.");
-            String OUI = "OUI";
-            do {
-                logger.info("\nOn commence par le mode Challenger.\n");
-                jeuchallenger.runJeu();
-                if (jeuchallenger.getVictoire() == 1) {
-                    victoireDuel =1;
+        jeuParams.setNbTours(1) ;
+        logger.info("Pour éviter de jouer jusqu'à l'infini, le nombre de tours maximum de la partie a été fixé à 100");
+        logger.info("On va aussi te demander régulièrement si tu veux mettre fin à la partie DUEL.");
+        String OUI = "OUI";
+        do {
+            logger.info("\nOn commence par le mode Challenger.\n");
+            jeuchallenger.runJeu();
+            if (jeuchallenger.getVictoire() == 1) {
+                victoireDuel =1;
+            } else {
+                victoireDuel = 2;
+                logger.info("\nOn passe maintenant au mode Défenseur.\n");
+                jeudefenseur.runJeu();
+                if (jeudefenseur.getVictoire() == 2) {
+                    victoireDuel = 3;
                 } else {
-                    victoireDuel = 2;
-                    logger.info("\nOn passe maintenant au mode Défenseur.\n");
-                    jeudefenseur.runJeu();
-                    if (jeudefenseur.getVictoire() == 2) {
-                        victoireDuel = 3;
-                    } else {
-                        victoireDuel = 4;
-                    }
+                    victoireDuel = 4;
                 }
-                logger.info("Si tu veux continuer à jouer cette partie de DUEL, réponds OUI : ");
-                Scanner sc = new Scanner(System.in);
-                try {
-                    ready1 = sc.nextLine();
-                } catch (InputMismatchException e) {
-                    logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
-                    sc.next();
-                    ready1 = sc.nextLine();
-                }
-            }while(ready1.equals(OUI));
-            logger.info("Tu as décidé de mettre fin à cette partie en mode Duel. C'est noté.");
-            victoireDuel = 5;
-        }
+            }
+            logger.info("Si tu veux continuer à jouer cette partie de DUEL, réponds OUI : ");
+            Scanner sc = new Scanner(System.in);
+            try {
+                ready1 = sc.nextLine();
+            } catch (InputMismatchException e) {
+                logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
+                sc.next();
+                ready1 = sc.nextLine();
+            }
+        }while(ready1.equals(OUI));
+        logger.info("Tu as décidé de mettre fin à cette partie en mode Duel. C'est noté.");
+        victoireDuel = 5;
     }
+}
 
 
 
