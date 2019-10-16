@@ -1,6 +1,10 @@
 package com.ocr.jeanlouis34.escapegame;
 
 
+import com.ocr.jeanlouis34.escapegame.jeu.JeuChallenger;
+import com.ocr.jeanlouis34.escapegame.jeu.JeuDefenseur;
+import com.ocr.jeanlouis34.escapegame.jeu.JeuDuel;
+import com.ocr.jeanlouis34.escapegame.jeu.JeuParams;
 import org.apache.log4j.Logger;
 
 

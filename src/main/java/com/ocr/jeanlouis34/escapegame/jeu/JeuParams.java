@@ -1,4 +1,4 @@
-package com.ocr.jeanlouis34.escapegame;
+package com.ocr.jeanlouis34.escapegame.jeu;
 
 import org.apache.log4j.Logger;
 

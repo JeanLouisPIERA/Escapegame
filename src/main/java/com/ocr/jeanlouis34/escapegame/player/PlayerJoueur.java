@@ -1,6 +1,9 @@
-package com.ocr.jeanlouis34.escapegame;
+package com.ocr.jeanlouis34.escapegame.player;
 
 
+import com.ocr.jeanlouis34.escapegame.combi.CombinaisonManuelle;
+import com.ocr.jeanlouis34.escapegame.combi.CombinaisonsAuto;
+import com.ocr.jeanlouis34.escapegame.combi.CombinaisonsParams;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
