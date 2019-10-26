@@ -42,7 +42,6 @@ public class JeuParams {
      * This method enables to scan the name of the Human Player
      * This method is run in the Main Class
      */
-
     public void addNomJoueur() {
         Scanner sc = new Scanner(System.in);
         logger.info("Bonjour à toi! \nBienvenue dans ce nouvel Escape Game. Dis moi, quel est ton nom ?");
@@ -63,9 +62,8 @@ public class JeuParams {
      * This method enables to scan the number of the choosen game pattern
      *
      * Inputmismatch Exception if the human player answer with a letter, a word or a negative number.
-     * If he writes a number > 10, only the first int is scanned.
+     * If he writes a number greater than 10, only the first int is scanned.
      */
-
     public void addModeJeu () {
         Scanner sc = new Scanner(System.in).useDelimiter(" *");
         try {
@@ -93,10 +91,9 @@ public class JeuParams {
      * The pattern JeuDuel is not intended
      *
      * Inputmismatch Exception if the human player answer with a letter, a word or a negative number.
-     * If he writes a number > 10, only the first int is scanned.
+     * If he writes a number greater than 10, only the first int is scanned.
      *
      */
-
     public void addNbTours () {
         Scanner sc = new Scanner(System.in).useDelimiter(" *");
         try {
@@ -122,7 +119,6 @@ public class JeuParams {
     /**
      * This is a sub-method of the method of this Class runModeJeu
      */
-
     public void displayAvailableModeJeu(){
         logger.info ("\nVoici les modes de Jeu qui s'offrent à toi :");
         logger.info("Choix N°1 - Mode CHALLENGER : c'est le Player Machine qui choisit la combinaison. A toi de la découvrir en un nombre de coups limités");
@@ -138,7 +134,6 @@ public class JeuParams {
     /**
      * This is a sub-method of the displaySeletedModeJeu which is a sub-method of the Class runModeJeu
      */
-
     public void modeDeveloper() {
         Scanner sc = new Scanner(System.in);
         logger.info("\nPour tester toutes les capacités du jeu, tu as la possibilité de jouer en mode Développeur. \nEn mode Développeur, la combinaison secrète est dévoilée au joueur attaquant ...");
@@ -150,7 +145,6 @@ public class JeuParams {
     /**
      * This is a sub-method of the method of this Class runModeJeu
      */
-
     public void displaySelectedModeJeu() {
         switch (modeJeu) {
             case 1:
@@ -183,7 +177,6 @@ public class JeuParams {
      * This method enables to scan the pattern choosen by the Player and to display the Rules and the results
      * This method is run in the Main ClassThis method
      */
-
     public void runModeJeu() {
         this.displayAvailableModeJeu();
         addModeJeu();
@@ -198,7 +191,6 @@ public class JeuParams {
      * The lone method of the class
      * This method enables to choose one more time between the three operative patterns.
      */
-
     public void finirlapartie() {
         logger.info("La précédente partie est finie. \nQue veux tu faire maintenant ?");
         logger.info("Si tu veux continuer à jouer, réponds OUI : ");

@@ -26,7 +26,6 @@ public class CombinaisonsParams {
      * this is the lone method of this class to enable to define the length of both manual and automatic combinaisons during the game
      * it is a basic method that scan an int
      */
-
     public void addNbCombinaisons() {
         Scanner sc = new Scanner(System.in).useDelimiter(" *");
         logger.info("Comme je te l'ai dit, une combinaison secrète doit être découverte. \nDis moi tu veux que cette combinaison contienne combien de chiffres ?");
@@ -40,6 +39,10 @@ public class CombinaisonsParams {
         }
     }
 
+
+    /**
+     * this method enables to display the length choosen by the player for the combinaison
+     */
     public void printNbcombinaisons() {
         if (nbCombinaisons <= 9 && nbCombinaisons > 1) {
             logger.info("C'est noté. \nTu as décidé que la combinaison secrète auras une longueur de " + this.nbCombinaisons +"  chiffres.");

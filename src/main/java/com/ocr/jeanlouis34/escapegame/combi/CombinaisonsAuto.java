@@ -14,7 +14,6 @@ import java.util.Random;
  * to compare the combinaisons (PlayerJoueur + PlayerMachine)
  * to run 2 of the 3 operatives patterns (JeuChallenger and JeuDefenseur)
  */
-
 public class CombinaisonsAuto extends Combinaisons {
 
     static Logger logger = Logger.getLogger(CombinaisonsAuto.class);
@@ -35,7 +34,6 @@ public class CombinaisonsAuto extends Combinaisons {
      * This method enables to combine the results of sorts in an indexed list.
      * It is identically shared by all the subclasses Combinaisons.
      */
-
     public void combiner() {
         super.combiner(combinaison);
     }
@@ -44,7 +42,6 @@ public class CombinaisonsAuto extends Combinaisons {
      * This method enables to print the combinaison obtained by the method combiner.
      * It is identically shared by all the subclasses Combinaisons.
      */
-
     public void printCombinaison() {
         super.printCombinaison();
     }
@@ -58,7 +55,6 @@ public class CombinaisonsAuto extends Combinaisons {
      * For now, the game can be very boring in its automatic pattern.
      * This further development could give an extra interest to this Escape Game.
      */
-
     @Override
     public void tirer() {
         Random r = new Random();

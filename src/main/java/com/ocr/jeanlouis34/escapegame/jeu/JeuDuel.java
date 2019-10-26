@@ -21,7 +21,6 @@ import java.util.Scanner;
  * This class objects are instanced only in class JeuDuel.
  * This clazs is one of the 5 classes of the first range (see javadoc of the Class JeuBegin) are invoked in the Class main.
  */
-
 public class JeuDuel implements Jeu {
 
     private String ready1;
@@ -56,7 +55,6 @@ public class JeuDuel implements Jeu {
      * A the end of each loop, the player is asked if he wants to break the run of this pattern
      * in this case, he can move back to the Main Menu and choose if he wants to play one of the another patterns.
      */
-
     @Override
     public void runJeu() {
         jeuParams.setNbTours(1) ;

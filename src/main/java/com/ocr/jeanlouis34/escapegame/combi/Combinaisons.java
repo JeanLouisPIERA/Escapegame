@@ -14,7 +14,6 @@ import java.util.List;
  * to compare the combinaisons (PlayerJoueur + PlayerMachine)
  * to run 2 of the 3 operatives patterns (JeuChallenger and JeuDefenseur)
  */
-
 public abstract class Combinaisons {
 
 
@@ -37,8 +36,7 @@ public abstract class Combinaisons {
      * This method enables to combine the results of sorts in an indexed list.
      * It is identically shared by all the subclasses Combinaisons.
      */
-
-    public void combiner (List<Integer> combinaison) {
+    public void combiner(List<Integer> combinaison) {
         while (this.combinaison.size() < combinaisonsParams.getNbCombinaisons())
             this.tirer();
         }
@@ -47,14 +45,12 @@ public abstract class Combinaisons {
      * This method enables to sort a number.
      * It is overrided by each member of this superclass, either on a manual way, either on an automatic way.
      */
-
     abstract void tirer();
 
     /**
      * This method enables to print the combinaison obtained by the method combiner.
      * It is identically shared by all the subclasses Combinaisons.
      */
-
     public void printCombinaison(){
         for (int j = 0; j < combinaisonsParams.getNbCombinaisons(); j++) {
             logger.info("Élément à l'index " + j + " = " + combinaison.get(j));

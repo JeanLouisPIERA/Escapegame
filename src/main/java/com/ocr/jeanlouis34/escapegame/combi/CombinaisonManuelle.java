@@ -15,7 +15,6 @@ import java.util.Scanner;
  * to compare the combinaisons (PlayerJoueur + PlayerMachine)
  * to run 2 of the 3 operatives patterns (JeuChallenger and JeuDefenseur)
  */
-
 public class CombinaisonManuelle extends Combinaisons{
 
     static Logger logger = Logger.getLogger(CombinaisonManuelle.class);
@@ -36,7 +35,6 @@ public class CombinaisonManuelle extends Combinaisons{
      * This method enables to combine the results of sorts in an indexed list.
      * It is identically shared by all the subclasses Combinaisons.
      */
-
     public void combiner() {
         /*logger.info("Ici le Player Machine. Je rappelle que la combinaison secrète a une longueur de " + combinaisons.getNbCombinaisons() + " chiffres.");*/
         logger.info("\nA toi de proposer une combinaison. \nAttention tu ne peux saisir que des chiffres entre 0 et 9. \nSinon la machine n'enregistrera que le premier chiffre que tu saisiras.");
@@ -49,7 +47,6 @@ public class CombinaisonManuelle extends Combinaisons{
      * This is a sub-method of the method combinerManuelle
      * It enables to scan the decisions of the Human Player when he creates his own combinaison.
      */
-
     @Override
     void tirer() {
 
@@ -69,7 +66,6 @@ public class CombinaisonManuelle extends Combinaisons{
      * This method enables to print the combinaison obtained by the method combiner.
      * It is identically shared by all the subclasses Combinaisons.
      */
-
     public void printCombinaison() {
         super.printCombinaison();
         /*for (int j = 0; j < combinaisons.getNbCombinaisons(); j++) {

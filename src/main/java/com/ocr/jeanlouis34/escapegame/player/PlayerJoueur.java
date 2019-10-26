@@ -22,7 +22,6 @@ import java.util.Scanner;
  *
  * WARNING : I have introduced a overrated level which enables to detect if the Human Player have cheated.
  */
-
 public class PlayerJoueur implements Player {
 
     static Logger logger = Logger.getLogger(PlayerJoueur.class);
@@ -69,7 +68,6 @@ public class PlayerJoueur implements Player {
     /**
      * This is the lone method of this class which enables the Human Player to compare the result of both combinaisons, key by key.
      */
-
     public void comparerLesListes() {
         for (int k = 0; k < combinaisonsParams.getNbCombinaisons(); k++) {
             int K = k + 1;

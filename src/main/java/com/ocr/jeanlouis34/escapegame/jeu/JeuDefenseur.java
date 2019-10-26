@@ -22,7 +22,6 @@ import org.apache.log4j.Logger;
  * This class objects are instanced only in class JeuDuel.
  * This class is one of the 5 classes of the first range (see javadoc of the Class JeuBegin)are invoked in the Class main.
  */
-
 public class JeuDefenseur implements Jeu {
 
     private int victoire;
@@ -60,7 +59,6 @@ public class JeuDefenseur implements Jeu {
      * In the code, some lines are surrounded by signs to neutralize loggers and enable to play in real
      * The loggers have not been erased to enable to test the program in his different issues
      */
-
     @Override
     public void runJeu() {
         tourPartie = 0;
