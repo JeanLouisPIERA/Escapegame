@@ -2,7 +2,9 @@ package com.ocr.jeanlouis34.escapegame.jeu;
 
 import org.apache.log4j.Logger;
 
+import java.io.*;
 import java.util.InputMismatchException;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class JeuParams {
@@ -95,9 +97,29 @@ public class JeuParams {
      *
      */
     public void addNbTours () {
+        final Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            input = new FileInputStream("src/main/resources/configuration.properties");
+            // chargement du fichier properties
+            prop.load(input);
+            // récupération et impression de la valeur de la propriété
+            logger.info("Tu peux choisir jusqu'à 9 tours. \nPar défaut le nombre de tours de cette partie est : ");
+            System.out.println(prop.getProperty("nbToursByDefault"));
+        } catch (final IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         Scanner sc = new Scanner(System.in).useDelimiter(" *");
         try {
-            logger.info("Tu peux choisir jusqu'à 9 tours. \nAttention, pense bien à entrer un chiffre positif ...");
+            logger.info("Attention, pense bien à entrer un chiffre positif ...");
             this.nbTours = sc.nextInt();
         } catch (InputMismatchException ex) {
             logger.error("La saisie n'est pas correcte. On recommence à zéro ...");
@@ -105,11 +127,37 @@ public class JeuParams {
             sc.next();
             addNbTours();
         }
+        int i = Integer.parseInt(prop.getProperty("nbToursByDefault"));
+        if(nbTours!=i) {
+            OutputStream output = null;
+            String nbToursModified = String.valueOf(nbTours);
+            try {
+
+                output = new FileOutputStream("src/main/resources/configuration.properties");
+
+                // modifier la valeur
+                prop.setProperty("nbTourssModified", nbToursModified);
+
+                // sauver la valeur dans le fichier configuration.properties
+                prop.store(output," Ce fichier de configuration présente 3 paramètres modifiables : \nle nombre de chiffres dans la combinaison (nbCombinaisons), \nle nombre de tours dans la partie (nbTours) \net le mode Développeur (modeDéveloper) \nLe suffixe ByDefault est accolé pour définir la valeur par défaut. \nLe suffixe Modified est accolé pour indiquer sa valeur lors de la dennière partie.");
+
+            } catch (final IOException io) {
+                io.printStackTrace();
+            } finally {
+                if (output != null) {
+                    try {
+                        output.close();
+                    } catch (final IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     public void printNbTours() {
         if (nbTours <= 9) {
-            logger.info("Tu as choisi de jouer ta partie en " + this.nbTours + "\nOn continue ...");
+            logger.info("Tu as choisi de jouer ta partie en " + this.nbTours + " tours. \nOn continue ...");
         } else {
             logger.info("Ta saisie n'est pas correcte. Je décide donc de fixer le nombre de tours à 5.");
             this.nbTours = 5;
@@ -135,11 +183,56 @@ public class JeuParams {
      * This is a sub-method of the displaySeletedModeJeu which is a sub-method of the Class runModeJeu
      */
     public void modeDeveloper() {
+        final Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            input = new FileInputStream("src/main/resources/configuration.properties");
+            // chargement du fichier properties
+            prop.load(input);
+            // récupération et impression de la valeur de la propriété
+            logger.info("\nPour tester toutes les capacités du jeu, tu as la possibilité de jouer en mode Développeur. \nEn mode Développeur, la combinaison secrète est dévoilée au joueur attaquant ...");
+            logger.info("\nTu te demandes si par défaut tu joueras en mode Développeur. Pour préserver l'intérêt du jeu la réponse est bien sûr  : ");
+            logger.info(prop.getProperty("modeDeveloperByDefault"));
+        } catch (final IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         Scanner sc = new Scanner(System.in);
-        logger.info("\nPour tester toutes les capacités du jeu, tu as la possibilité de jouer en mode Développeur. \nEn mode Développeur, la combinaison secrète est dévoilée au joueur attaquant ...");
         logger.info("Si tu choisis le mode Développeur, tape OUI :");
         this.modeDeveloper = sc.nextLine();
         logger.info("C'est noté. Je te remercie " + this.nomJoueur + "! ");
+        if(modeDeveloper.equals("OUI")) {
+            OutputStream output = null;
+            String modeDeveloperModified = modeDeveloper;
+            try {
+
+                output = new FileOutputStream("src/main/resources/configuration.properties");
+
+                // modifier la valeur
+                prop.setProperty("modeDeveloperModified", modeDeveloperModified);
+
+                // sauver la valeur dans le fichier configuration.properties
+                prop.store(output," Ce fichier de configuration présente 3 paramètres modifiables : \nle nombre de chiffres dans la combinaison (nbCombinaisons), \nle nombre de tours dans la partie (nbTours) \net le mode Développeur (modeDéveloper) \nLe suffixe ByDefault est accolé pour définir la valeur par défaut. \nLe suffixe Modified est accolé pour indiquer sa valeur lors de la dennière partie.");
+
+            } catch (final IOException io) {
+                io.printStackTrace();
+            } finally {
+                if (output != null) {
+                    try {
+                        output.close();
+                    } catch (final IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     /**
