@@ -71,7 +71,6 @@ public class JeuChallenger implements Jeu {
         combinaisonManuelle.getCombinaison().clear();
         combinaisonsAuto.getCombinaison().clear();
         combinaisonsParams.addNbCombinaisons();
-        combinaisonsParams.printNbcombinaisons();
         combinaisonsAuto.combiner();
             do {
                 if (jeuParams.getModeDeveloper().equals("OUI")) {

@@ -100,20 +100,20 @@ public class JeuParams {
         final Properties prop = new Properties();
         InputStream input = null;
         try {
-            input = new FileInputStream("src/main/resources/configuration.properties");
+            input = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
             // chargement du fichier properties
             prop.load(input);
             // récupération et impression de la valeur de la propriété
             logger.info("Tu peux choisir jusqu'à 9 tours. \nPar défaut le nombre de tours de cette partie est : ");
             System.out.println(prop.getProperty("nbToursByDefault"));
         } catch (final IOException ex) {
-            ex.printStackTrace();
+            logger.error(ex);
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (final IOException e) {
-                    e.printStackTrace();
+                    logger.error(e);
                 }
             }
         }
@@ -122,45 +122,16 @@ public class JeuParams {
             logger.info("Attention, pense bien à entrer un chiffre positif ...");
             this.nbTours = sc.nextInt();
         } catch (InputMismatchException ex) {
-            logger.error("La saisie n'est pas correcte. On recommence à zéro ...");
-            nbTours = 0;
-            sc.next();
-            addNbTours();
+            logger.error("La saisie n'est pas correcte. La partie va donc se jouer avec la valeur par défaut.");
+            int i = Integer.parseInt(prop.getProperty("nbToursByDefault"));
+            nbTours = i;
         }
-        int i = Integer.parseInt(prop.getProperty("nbToursByDefault"));
-        if(nbTours!=i) {
-            OutputStream output = null;
-            String nbToursModified = String.valueOf(nbTours);
-            try {
-
-                output = new FileOutputStream("src/main/resources/configuration.properties");
-
-                // modifier la valeur
-                prop.setProperty("nbTourssModified", nbToursModified);
-
-                // sauver la valeur dans le fichier configuration.properties
-                prop.store(output," Ce fichier de configuration présente 3 paramètres modifiables : \nle nombre de chiffres dans la combinaison (nbCombinaisons), \nle nombre de tours dans la partie (nbTours) \net le mode Développeur (modeDéveloper) \nLe suffixe ByDefault est accolé pour définir la valeur par défaut. \nLe suffixe Modified est accolé pour indiquer sa valeur lors de la dennière partie.");
-
-            } catch (final IOException io) {
-                io.printStackTrace();
-            } finally {
-                if (output != null) {
-                    try {
-                        output.close();
-                    } catch (final IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
-
-    public void printNbTours() {
-        if (nbTours <= 9) {
-            logger.info("Tu as choisi de jouer ta partie en " + this.nbTours + " tours. \nOn continue ...");
+        if (nbTours <= 9 && nbTours > 1) {
+            logger.info("C'est noté. \nTu as décidé que le nombre de tours de cette partie sera de " + this.nbTours + "  tours.");
         } else {
-            logger.info("Ta saisie n'est pas correcte. Je décide donc de fixer le nombre de tours à 5.");
-            this.nbTours = 5;
+            int i = Integer.parseInt(prop.getProperty("nbToursByDefault"));
+            nbTours = i;
+            logger.info("Ta saisie n'est pas correcte. Le nombre de tours de cette partie est donc fixé à la valeur par défaut de " + this.nbTours + " tours.");
         }
     }
 
@@ -186,7 +157,7 @@ public class JeuParams {
         final Properties prop = new Properties();
         InputStream input = null;
         try {
-            input = new FileInputStream("src/main/resources/configuration.properties");
+            input = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
             // chargement du fichier properties
             prop.load(input);
             // récupération et impression de la valeur de la propriété
@@ -194,44 +165,29 @@ public class JeuParams {
             logger.info("\nTu te demandes si par défaut tu joueras en mode Développeur. Pour préserver l'intérêt du jeu la réponse est bien sûr  : ");
             logger.info(prop.getProperty("modeDeveloperByDefault"));
         } catch (final IOException ex) {
-            ex.printStackTrace();
+            logger.error(ex);
         } finally {
             if (input != null) {
                 try {
                     input.close();
                 } catch (final IOException e) {
-                    e.printStackTrace();
+                    logger.error(e);
                 }
             }
         }
         Scanner sc = new Scanner(System.in);
         logger.info("Si tu choisis le mode Développeur, tape OUI :");
-        this.modeDeveloper = sc.nextLine();
-        logger.info("C'est noté. Je te remercie " + this.nomJoueur + "! ");
+        try {
+            this.modeDeveloper = sc.nextLine();
+        } catch (InputMismatchException e) {
+            logger.error("La saisie n'est pas correcte. La partie va donc se jouer avec la valeur par défaut.");
+            modeDeveloper = prop.getProperty("modeDeveloperByDefault");
+        }
         if(modeDeveloper.equals("OUI")) {
-            OutputStream output = null;
-            String modeDeveloperModified = modeDeveloper;
-            try {
-
-                output = new FileOutputStream("src/main/resources/configuration.properties");
-
-                // modifier la valeur
-                prop.setProperty("modeDeveloperModified", modeDeveloperModified);
-
-                // sauver la valeur dans le fichier configuration.properties
-                prop.store(output," Ce fichier de configuration présente 3 paramètres modifiables : \nle nombre de chiffres dans la combinaison (nbCombinaisons), \nle nombre de tours dans la partie (nbTours) \net le mode Développeur (modeDéveloper) \nLe suffixe ByDefault est accolé pour définir la valeur par défaut. \nLe suffixe Modified est accolé pour indiquer sa valeur lors de la dennière partie.");
-
-            } catch (final IOException io) {
-                io.printStackTrace();
-            } finally {
-                if (output != null) {
-                    try {
-                        output.close();
-                    } catch (final IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+            logger.info("La partie va donc se jouer en mode Développeur");
+        } else {
+            logger.info("Tu n'as pas tapé OUI (Attention aux majuscules !!).La partie ne se jouera pas en mode Développeur");
+            modeDeveloper = prop.getProperty("modeDeveloperByDefault");
         }
     }
 
@@ -245,14 +201,14 @@ public class JeuParams {
                 modeDeveloper();
                 logger.info("\nEn combien de tours veux-tu jouer cette partie ?");
                 addNbTours();
-                printNbTours();
+                /*printNbTours();*/
                 break;
             case 2:
                 logger.info("Tu as choisi de jouer en mode DEFENSEUR. Tous mes voeux pour que ta combinaison secrète ne soit pas découverte !");
                 modeDeveloper();
                 logger.info("\nEn combien de tours veux-tu jouer cette partie ?");
                 addNbTours();
-                printNbTours();
+                /*printNbTours();*/
                 break;
             case 3:
                 logger.info("Tu as choisi de jouer en mode DUEL. On va alterner les modes Challenger et Défenseur à tour de rôle jusqu'à ce que l'un des joueurs l'emporte.");
