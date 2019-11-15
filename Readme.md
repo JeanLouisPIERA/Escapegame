@@ -56,7 +56,7 @@
         information about the project and configuration details used by Maven to build the project.
         WARNING : WITHOUT THIS CORRECT FILE IN YOUR PROGRAM DIRECTORY, IT WILL BE IMPOSSIBLE TO DEPLOY AND RUN THE PROGRAM WITH
         THE MAVEN TOOL
-        ** and eventually, this file README.md your are now reading.
+        ** and eventually, this file README.md your are now reading.+
 
     * Launch the Command Prompt from your installed Directory escape-game on your disk and check if MAVEN tool is correctly
     installed and parametered as well as its environnement :

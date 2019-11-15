@@ -57,58 +57,35 @@ public class PlayerJoueur implements Player {
         return comparaisonsListes;
     }
 
-    public void setComparaisonsListesManuelle(List<String> comparaisonsListes) {
-        this.comparaisonsListes = comparaisonsListes;
-    }
-
     public int getVictoire() {
         return victoire;
-    }
-
-    public void setVictoireDefenseur(int victoireDefenseur) {
-        this.victoire = victoire;
     }
 
     /**
      * This is the lone method of this class which enables the Human Player to compare the result of both combinaisons, key by key.
      */
     public void comparerLesListes() {
-        for (int k = 0; k < combinaisonsParams.getNbCombinaisons(); k++) {
-            int K = k + 1;
-            this.ca = (Integer) combinaisonsAuto.getCombinaison().get(k);
-            logger.info("\nLe chiffre proposé par la machine en position " + K + " est : " + ca);
-            this.cm = (Integer) combinaisonManuelle.getCombinaison().get(k);
-            logger.info("Le chiffre de ta combinaison secrète en position " + K + " est : " + cm);
-            logger.info("Si la proposition de la machine correspond au chiffre de ta combinaison secrète tape =,\nsi elle est moins élevée tape -,\nsi elle est plus élevée tape +");
-            String cr1 = "=";
-            String cr2 = "+";
-            String cr3 = "-";
+        comparaisonsListes.clear();
+        while (this.comparaisonsListes.size() < combinaisonsParams.getNbCombinaisons()) {
+            String x = " ";
+            String tab[] = null;
+            System.out.print("    Réponse :   ");
             Scanner sc = new Scanner(System.in);
-            try {
-                this.cr = sc.nextLine();
-                (comparaisonsListes).add(cr);
-                if ((ca == cm && !cr.equals(cr1)) || (ca > cm && !cr.equals(cr2)) || (ca < cm && !cr.equals(cr3))) {
-                    logger.info("Tu es un tricheur Pimpon. La Machine ne joue pas avec les tricheurs. FIN DE PARTIE. GAME OVER.");
-                    System.exit(0);
-                }
-            } catch (InputMismatchException e) {
-                logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
-                sc.next();
-                comparerLesListes();
+            x = sc.nextLine();
+            tab = new String[x.length()];
+            for (int i = 0; i < tab.length; i++) {
+                tab[i] = x.substring(i, i+1);
+                this.comparaisonsListes.add(tab[i]);
             }
         }
         printComparaisonsListes();
-        combinaisonsAuto.getCombinaison().clear();
-        comparaisonsListes.clear();
-        }
+    }
 
         public void printComparaisonsListes(){
-            logger.info("La proposition de la machine " + combinaisonsAuto.getCombinaison() + " donne les résultats suivants : " + comparaisonsListes);
-            if (combinaisonManuelle.getCombinaison().equals(combinaisonsAuto.getCombinaison())) {
-                logger.info("\nLa combinaison proposée par la machine est la combinaison secrète.");
+            if (combinaisonManuelle.getCombinaisonSecrete().equals(combinaisonsAuto.getCombinaison())) {
+                logger.info("\nVICTOIRE DE LA MACHINE.");
                 victoire = 2;
             } else {
-                logger.info("\nLa machine n'a pas découvert la combinaison secrète.");
                 victoire = 1;
             }
         }

@@ -18,58 +18,76 @@ import java.util.Scanner;
 public class CombinaisonManuelle extends Combinaisons{
 
     static Logger logger = Logger.getLogger(CombinaisonManuelle.class);
+    private int modeTirageManuel;
 
-    public CombinaisonManuelle(CombinaisonsParams combinaisonsParams) {
-        super(combinaisonsParams);
+    public CombinaisonManuelle(CombinaisonsParams combinaisonsParams) { super(combinaisonsParams); this.modeTirageManuel=0;
     }
 
-    public CombinaisonManuelle(List<Integer> combinaison, int tirage, CombinaisonsParams combinaisonsParams) {
-        super(combinaison, tirage, combinaisonsParams);
+    public CombinaisonManuelle(List<Integer> combinaison, List<Integer> combinaisonSecrete, CombinaisonsParams combinaisonsParams,int modeTirageManuel) {
+        super(combinaison, combinaisonSecrete, combinaisonsParams);
+        this.modeTirageManuel = modeTirageManuel;
     }
 
     public List<Integer> getCombinaison() {
         return combinaison;
     }
 
+    public List<Integer> getCombinaisonSecrete() { return combinaisonSecrete;}
+
+    public void setModeTirageManuel(int modeTirageManuel) {
+        this.modeTirageManuel = modeTirageManuel;
+    }
+
+    public int getModeTirageManuel() {
+        return modeTirageManuel;
+    }
+
     /**
      * This method enables to combine the results of sorts in an indexed list.
      * It is identically shared by all the subclasses Combinaisons.
      */
-    public void combiner() {
-        /*logger.info("Ici le Player Machine. Je rappelle que la combinaison secrète a une longueur de " + combinaisons.getNbCombinaisons() + " chiffres.");*/
-        logger.info("\nA toi de proposer une combinaison. \nAttention tu ne peux saisir que des chiffres entre 0 et 9. \nSinon la machine n'enregistrera que le premier chiffre que tu saisiras.");
-        super.combiner(combinaison);
-        /*while (this.combinaison.size() < combinaisons.getNbCombinaisons())
-            this.tirer();*/
-    }
-
-    /**
-     * This is a sub-method of the method combinerManuelle
-     * It enables to scan the decisions of the Human Player when he creates his own combinaison.
-     */
     @Override
-    void tirer() {
+    public void combiner() {
+        switch (modeTirageManuel) {
+            case 1:
+                while (this.combinaisonSecrete.size() < combinaisonsParams.getNbCombinaisons()) {
+                    int tabs[] = null;
+                    Scanner scs = new Scanner(System.in);
+                    /*System.out.print("\nProposition :");*/
+                    String x = scs.nextLine();
+                    tabs = new int[x.length()];
 
-        logger.info("Merci d'indiquer ici le chiffre que tu choisis :");
-        Scanner sc = new Scanner(System.in).useDelimiter(" *");
-        try {
-            this.tirage = sc.nextInt();
-            (/*(ArrayList)*/ this.combinaison).add(tirage);
-        } catch (InputMismatchException e) {
-            logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
-            sc.next();
-            this.tirer();
-        }
-        }
+                    for (int i = 0; i < tabs.length; i++) {
+                        tabs[i] = x.charAt(i) - '0';
+                        this.combinaisonSecrete.add(tabs[i]);
+                    }
+                }
+                break;
+            case 2:
+                while (this.combinaison.size() < combinaisonsParams.getNbCombinaisons()) {
+                    int tab[] = null;
+                    Scanner sc = new Scanner(System.in);
+                    /*System.out.print("\nProposition :");*/
+                    String x = sc.nextLine();
+                    tab = new int[x.length()];
+
+                    for (int i = 0; i < tab.length; i++) {
+                        tab[i] = x.charAt(i) - '0';
+                        this.combinaison.add(tab[i]);
+                    }
+                }
+                break;
+                }
+            }
+
 
     /**
      * This method enables to print the combinaison obtained by the method combiner.
      * It is identically shared by all the subclasses Combinaisons.
      */
+    @Override
     public void printCombinaison() {
         super.printCombinaison();
-        /*for (int j = 0; j < combinaisons.getNbCombinaisons(); j++) {
-            logger.info("Élément à l'index " + j + " = " + combinaison.get(j));*/
     }
 }
 

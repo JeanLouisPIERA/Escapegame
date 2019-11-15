@@ -23,8 +23,6 @@ public class JeuEscapegame implements Jeu {
 
     @Override
     public void runJeu() {
-        jeuParams.addNomJoueur();
-        jeuParams.printNomJoueur();
         jeuParams.runModeJeu();
         do {
             switch (jeuParams.getModeJeu()) {
@@ -42,18 +40,8 @@ public class JeuEscapegame implements Jeu {
                     break;
                 case 3:
                     jeuDuel.runJeu();
-                    switch (jeuDuel.getVictoireDuel()) {
-                        case 1 :
-                        case 3 :
-                        case 5 :
-                            jeuParams.finirlapartie();
-                            break;
-                        case 2 :
-                            jeuDefenseur.runJeu();
-                            break;
-                        case 4 :
-                            jeuChallenger.runJeu();
-                            break;
+                    if (jeuDuel.getVictoireDuel() == 1 || jeuDuel.getVictoireDuel() == 4) {
+                        jeuParams.finirlapartie();
                     }
                     break;
                 default:

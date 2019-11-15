@@ -4,6 +4,7 @@ import com.ocr.jeanlouis34.escapegame.player.PlayerJoueur;
 import com.ocr.jeanlouis34.escapegame.combi.CombinaisonManuelle;
 import com.ocr.jeanlouis34.escapegame.combi.CombinaisonsAuto;
 import com.ocr.jeanlouis34.escapegame.combi.CombinaisonsParams;
+import com.ocr.jeanlouis34.escapegame.player.PlayerMachine;
 import org.apache.log4j.Logger;
 
 /**
@@ -31,6 +32,7 @@ public class JeuDefenseur implements Jeu {
     private CombinaisonsAuto combinaisonsAuto = new CombinaisonsAuto(combinaisonsParams);
     private CombinaisonManuelle combinaisonManuelle = new CombinaisonManuelle(combinaisonsParams);
     private PlayerJoueur playerJoueur = new PlayerJoueur(combinaisonsParams, combinaisonsAuto, combinaisonManuelle);
+    private PlayerMachine playerMachine = new PlayerMachine(combinaisonsParams, combinaisonsAuto, combinaisonManuelle, playerJoueur);
     static Logger logger = Logger.getLogger(JeuDefenseur.class);
 
     public JeuDefenseur (JeuParams jeuParams){
@@ -64,25 +66,28 @@ public class JeuDefenseur implements Jeu {
         tourPartie = 0;
         combinaisonManuelle.getCombinaison().clear();
         combinaisonsAuto.getCombinaison().clear();
+        combinaisonsAuto.getCombinaisonSecrete().clear();
+        combinaisonManuelle.getCombinaisonSecrete().clear();
         combinaisonsParams.addNbCombinaisons();
+        System.out.print("Saisir votre combinaison secrète:  ");
+        combinaisonManuelle.setModeTirageManuel(1);
         combinaisonManuelle.combiner();
+        combinaisonsAuto.setModeTirageAuto(1);
+        combinaisonsAuto.combiner();
+        combinaisonsAuto.printCombinaison();
+        playerJoueur.comparerLesListes();
         do {
-            if (jeuParams.getModeDeveloper().equals("OUI")) {
-                logger.info("\nJe rapelle que ta combinaison secrète est :");
-                combinaisonManuelle.printCombinaison();
-                logger.info("\nComparons step by step les 2 combinaisons ...");
+            tourPartie++;
+            playerMachine.lireComparaisonsListes();
+            combinaisonsAuto.combiner();
+            combinaisonsAuto.printCombinaison();
+            playerJoueur.comparerLesListes();
+            if (playerJoueur.getVictoire() == 1) {
+                victoire = 1;
+            } else if (playerJoueur.getVictoire() == 2) {
+                victoire = 2;
             }
-                combinaisonsAuto.combiner();
-                playerJoueur.comparerLesListes();
-                tourPartie++;
-                if (playerJoueur.getVictoire() == 1) {
-                    victoire = 1;
-                    logger.info("Bravo " + jeuParams.getNomJoueur() + ". Tu t'es bien défendu.");
-                } else if (playerJoueur.getVictoire() == 2) {
-                    victoire = 2;
-                    logger.info("Désolé " + jeuParams.getNomJoueur() + ". Le Player Machine a été plus fort que toi.");
-                }
-            }
+        }
         while (victoire == 1 && tourPartie < jeuParams.getNbTours());
     }
 }

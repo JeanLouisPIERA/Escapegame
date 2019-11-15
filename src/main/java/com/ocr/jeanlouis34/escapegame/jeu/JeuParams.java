@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 public class JeuParams {
 
-    private String nomJoueur;
     private int modeJeu;
     private int nbTours;
     private String ready;
@@ -18,14 +17,14 @@ public class JeuParams {
     private int tourPartie;
     private String ready1;
     private String modeDeveloper;
+    private int nbCombinaisons;
     static Logger logger = Logger.getLogger(JeuParams.class);
 
     public JeuParams() {
-        this("",0,0,"",0,0,0,"","");
+        this(0 ,0,"",0,0,0,"","", 0);
     }
 
-    public JeuParams(String nomJoueur, int modeJeu, int nbTours, String ready, int choixJeu, int victoire, int tourPartie, String ready1, String modeDeveloper) {
-        this.nomJoueur = nomJoueur;
+    public JeuParams(int modeJeu, int nbTours, String ready, int choixJeu, int victoire, int tourPartie, String ready1, String modeDeveloper, int nbCombinaisons) {
         this.modeJeu = modeJeu;
         this.nbTours = nbTours;
         this.ready = ready;
@@ -34,26 +33,7 @@ public class JeuParams {
         this.tourPartie = tourPartie;
         this.ready1 = ready1;
         this.modeDeveloper = modeDeveloper;
-    }
-
-    public String getNomJoueur() {
-        return nomJoueur;
-    }
-
-    /**
-     * This method enables to scan the name of the Human Player
-     * This method is run in the Main Class
-     */
-    public void addNomJoueur() {
-        Scanner sc = new Scanner(System.in);
-        logger.info("Bonjour à toi! \nBienvenue dans ce nouvel Escape Game. Dis moi, quel est ton nom ?");
-        this.nomJoueur = sc.nextLine();
-    }
-
-    public void printNomJoueur() {
-        logger.info("C'est noté. Je te remercie" + this.nomJoueur + "! \n ");
-        logger.info("Dans ce jeu, le Player Machine ou toi, vous devrez découvrir une combinaison secrète de plusieurs chiffres.");
-        logger.info("Entre le Player Machine et toi, à la fin, il ne peut en rester qu'un.");
+        this.nbCombinaisons = nbCombinaisons;
     }
 
     public int getModeJeu() { return modeJeu;
@@ -69,11 +49,9 @@ public class JeuParams {
     public void addModeJeu () {
         Scanner sc = new Scanner(System.in).useDelimiter(" *");
         try {
-            logger.info("Attention, l'ordinateur ne retiendra que le premier chiffre que tu saisiras.");
-            logger.info("Je te rappelle que tu ne peux saisir que 3 choix : 1 pour CHALLENGER, 2 pour DEFENSEUR, 3 pour DUEL !");
             this.modeJeu = sc.nextInt();
         } catch (InputMismatchException ex) {
-            logger.error(" La saisie n'est pas correcte. On recommence à zéro ...");
+            logger.error(" Saisie incorrecte.");
             this.modeJeu = 0;
             sc.next();
             addModeJeu();
@@ -103,11 +81,18 @@ public class JeuParams {
             input = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
             // chargement du fichier properties
             prop.load(input);
-            // récupération et impression de la valeur de la propriété
-            logger.info("Tu peux choisir jusqu'à 9 tours. \nPar défaut le nombre de tours de cette partie est : ");
-            System.out.println(prop.getProperty("nbToursByDefault"));
+            this.nbTours= Integer.parseInt(prop.getProperty("nbToursByDefault"));
+            // récupération de la valeur de la propriété
         } catch (final IOException ex) {
             logger.error(ex);
+            Scanner sc = new Scanner(System.in).useDelimiter(" *");
+            logger.info(" Probleme dans l'utilisation du paramètre par défaut du nombre de tours de la partie. Le joueur doit saisir ce paramètre");
+            try {
+                this.nbTours = sc.nextInt();
+            } catch (InputMismatchException e) {
+                logger.error("Saisie incorrecte. La partie va se jouer en 2 Tours.");
+                nbTours = 2;
+            }
         } finally {
             if (input != null) {
                 try {
@@ -117,33 +102,13 @@ public class JeuParams {
                 }
             }
         }
-        Scanner sc = new Scanner(System.in).useDelimiter(" *");
-        try {
-            logger.info("Attention, pense bien à entrer un chiffre positif ...");
-            this.nbTours = sc.nextInt();
-        } catch (InputMismatchException ex) {
-            logger.error("La saisie n'est pas correcte. La partie va donc se jouer avec la valeur par défaut.");
-            int i = Integer.parseInt(prop.getProperty("nbToursByDefault"));
-            nbTours = i;
-        }
-        if (nbTours <= 9 && nbTours > 1) {
-            logger.info("C'est noté. \nTu as décidé que le nombre de tours de cette partie sera de " + this.nbTours + "  tours.");
-        } else {
-            int i = Integer.parseInt(prop.getProperty("nbToursByDefault"));
-            nbTours = i;
-            logger.info("Ta saisie n'est pas correcte. Le nombre de tours de cette partie est donc fixé à la valeur par défaut de " + this.nbTours + " tours.");
-        }
     }
 
     /**
      * This is a sub-method of the method of this Class runModeJeu
      */
     public void displayAvailableModeJeu(){
-        logger.info ("\nVoici les modes de Jeu qui s'offrent à toi :");
-        logger.info("Choix N°1 - Mode CHALLENGER : c'est le Player Machine qui choisit la combinaison. A toi de la découvrir en un nombre de coups limités");
-        logger.info("Choix N°2 - Mode DEFENSEUR : c'est toi qui choisit la combinaison et le Player Machine qui attaque dans un nombre de coups limités");
-        logger.info("Choix N°3 - Mode DUEL : le Player Machine et toi vous choisissez vos combinaisons et attaquez à tour de rôle");
-        logger.info("\nAlors dis moi" + this.getNomJoueur() + ", quelle est ta décision ? Ecris ici le numéro de ton choix :");
+        logger.info ("\nPour choisir le mode de Jeu, taper 1 (CHALLENGER), 2(DEFENSEUR) ou 3 (DUEL) : ");
     }
 
     public String getModeDeveloper() {
@@ -160,12 +125,11 @@ public class JeuParams {
             input = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
             // chargement du fichier properties
             prop.load(input);
-            // récupération et impression de la valeur de la propriété
-            logger.info("\nPour tester toutes les capacités du jeu, tu as la possibilité de jouer en mode Développeur. \nEn mode Développeur, la combinaison secrète est dévoilée au joueur attaquant ...");
-            logger.info("\nTu te demandes si par défaut tu joueras en mode Développeur. Pour préserver l'intérêt du jeu la réponse est bien sûr  : ");
-            logger.info(prop.getProperty("modeDeveloperByDefault"));
+            this.modeDeveloper = prop.getProperty("modeDeveloperByDefault");
+            // récupération de la valeur de la propriété
         } catch (final IOException ex) {
             logger.error(ex);
+            this.modeDeveloper = "NON";
         } finally {
             if (input != null) {
                 try {
@@ -175,20 +139,6 @@ public class JeuParams {
                 }
             }
         }
-        Scanner sc = new Scanner(System.in);
-        logger.info("Si tu choisis le mode Développeur, tape OUI :");
-        try {
-            this.modeDeveloper = sc.nextLine();
-        } catch (InputMismatchException e) {
-            logger.error("La saisie n'est pas correcte. La partie va donc se jouer avec la valeur par défaut.");
-            modeDeveloper = prop.getProperty("modeDeveloperByDefault");
-        }
-        if(modeDeveloper.equals("OUI")) {
-            logger.info("La partie va donc se jouer en mode Développeur");
-        } else {
-            logger.info("Tu n'as pas tapé OUI (Attention aux majuscules !!).La partie ne se jouera pas en mode Développeur");
-            modeDeveloper = prop.getProperty("modeDeveloperByDefault");
-        }
     }
 
     /**
@@ -197,26 +147,22 @@ public class JeuParams {
     public void displaySelectedModeJeu() {
         switch (modeJeu) {
             case 1:
-                logger.info("Tu as choisi de jouer en mode CHALLENGER. A toi de trouver la combinaison secrète. Que la Force soit avec toi !");
+                logger.info("PARTIE EN MODE CHALLENGER");
                 modeDeveloper();
-                logger.info("\nEn combien de tours veux-tu jouer cette partie ?");
                 addNbTours();
-                /*printNbTours();*/
                 break;
             case 2:
-                logger.info("Tu as choisi de jouer en mode DEFENSEUR. Tous mes voeux pour que ta combinaison secrète ne soit pas découverte !");
+                logger.info("PARTIE EN MODE DEFENSEUR");
                 modeDeveloper();
-                logger.info("\nEn combien de tours veux-tu jouer cette partie ?");
                 addNbTours();
-                /*printNbTours();*/
                 break;
             case 3:
-                logger.info("Tu as choisi de jouer en mode DUEL. On va alterner les modes Challenger et Défenseur à tour de rôle jusqu'à ce que l'un des joueurs l'emporte.");
-                nbTours = 100;
+                logger.info("PARTIE EN MODE DUEL");
                 modeDeveloper();
+                nbTours = 100;
                 break;
             default:
-                logger.info("Ne réponds pas n'importe quoi pour éviter le combat. Pour que tu comprennes bien, bis repetita ...");
+                logger.info("Erreur dans la saisie");
                 runModeJeu();
                 break;
         }
@@ -241,8 +187,7 @@ public class JeuParams {
      * This method enables to choose one more time between the three operative patterns.
      */
     public void finirlapartie() {
-        logger.info("La précédente partie est finie. \nQue veux tu faire maintenant ?");
-        logger.info("Si tu veux continuer à jouer, réponds OUI : ");
+        logger.info("\nLa partie est finie. Pour une nouvelle partie, taper OUI ");
         String OUI = "OUI";
         Scanner sc = new Scanner(System.in);
         try {
@@ -253,7 +198,6 @@ public class JeuParams {
             ready = sc.nextLine();
         }
         if (ready.equals(OUI)) {
-            logger.info("Quel mode de jeu souhaites-tu jouer ? Un patit rappel.");
             runModeJeu();
             switch (modeJeu) {
                 case 1:
@@ -271,8 +215,42 @@ public class JeuParams {
                     break;
             }
         } else {
-            logger.info("Tu as choisi de quitter l'application. J'espère te revoir bientôt et te souhaite une bonne journée " + nomJoueur);
+            logger.info("Tu as choisi de quitter l'application. J'espère te revoir bientôt et te souhaite une bonne journée ");
             System.exit(0);
+        }
+    }
+
+    public int getNbCombinaisons() {
+        return nbCombinaisons;
+    }
+
+    public void addNbCombinaisons() {
+        final Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            input = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
+            // chargement du fichier properties
+            prop.load(input);
+            this.nbCombinaisons = Integer.parseInt(prop.getProperty("nbCombinaisonsByDefault"));
+            // récupération de la valeur de la propriété
+        } catch (final IOException ex) {
+            logger.error(ex);
+            Scanner sc = new Scanner(System.in).useDelimiter(" *");
+            logger.info(" Probleme dans l'utilisation du paramètre par défaut de longueur de la combinaison. Le joueur doit saisir ce paramètre");
+            try {
+                this.nbCombinaisons = sc.nextInt();
+            } catch (InputMismatchException e) {
+                logger.error("La saisie n'est pas correcte. La longueur de la combinaison sera de 4 chiffres.");
+                nbCombinaisons = 4;
+            }
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (final IOException e) {
+                    logger.error(e);
+                }
+            }
         }
     }
 }

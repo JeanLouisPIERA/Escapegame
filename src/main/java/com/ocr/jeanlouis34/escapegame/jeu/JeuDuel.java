@@ -1,5 +1,10 @@
 package com.ocr.jeanlouis34.escapegame.jeu;
 
+import com.ocr.jeanlouis34.escapegame.combi.CombinaisonManuelle;
+import com.ocr.jeanlouis34.escapegame.combi.CombinaisonsAuto;
+import com.ocr.jeanlouis34.escapegame.combi.CombinaisonsParams;
+import com.ocr.jeanlouis34.escapegame.player.PlayerJoueur;
+import com.ocr.jeanlouis34.escapegame.player.PlayerMachine;
 import org.apache.log4j.Logger;
 
 import java.util.InputMismatchException;
@@ -27,21 +32,22 @@ public class JeuDuel implements Jeu {
     private int victoireDuel;
     private int tourPartie;
     private JeuParams jeuParams = new JeuParams();
-    private JeuDefenseur jeudefenseur;
-    private JeuChallenger jeuchallenger;
+    private CombinaisonsParams combinaisonsParams = new CombinaisonsParams();
+    private CombinaisonsAuto combinaisonsAuto = new CombinaisonsAuto(combinaisonsParams);
+    private CombinaisonManuelle combinaisonManuelle = new CombinaisonManuelle(combinaisonsParams);
+    private PlayerJoueur playerJoueur = new PlayerJoueur(combinaisonsParams, combinaisonsAuto, combinaisonManuelle);
+    private PlayerMachine playerMachine = new PlayerMachine(combinaisonsParams, combinaisonsAuto, combinaisonManuelle, playerJoueur);
     static Logger logger = Logger.getLogger(JeuDuel.class);
 
-    public JeuDuel (JeuParams jeuParams, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
-        this("",0,0,jeuParams, jeudefenseur, jeuchallenger);
+    public JeuDuel(JeuParams jeuParams) {
+        this("", 0, 0, jeuParams);
     }
 
-    public JeuDuel(String ready1, int victoireDuel, int tourPartie, JeuParams jeuParams, JeuDefenseur jeudefenseur, JeuChallenger jeuchallenger) {
+    public JeuDuel(String ready1, int victoireDuel, int tourPartie, JeuParams jeuParams) {
         this.ready1 = ready1;
         this.victoireDuel = victoireDuel;
         this.tourPartie = tourPartie;
         this.jeuParams = jeuParams;
-        this.jeudefenseur = jeudefenseur;
-        this.jeuchallenger = jeuchallenger;
     }
 
     public int getVictoireDuel() {
@@ -51,43 +57,75 @@ public class JeuDuel implements Jeu {
     /**
      * This method is the lone method of this class
      * It theorically enables to do an infinite run of loops (although limited at 100 ...) in which alternate one round of JeuChallenger pattern and one round of JeuDefenseur pattern until one of them displays the victory signal.
-     *
+     * <p>
      * A the end of each loop, the player is asked if he wants to break the run of this pattern
      * in this case, he can move back to the Main Menu and choose if he wants to play one of the another patterns.
      */
     @Override
     public void runJeu() {
-        jeuParams.setNbTours(1) ;
-        logger.info("Pour éviter de jouer jusqu'à l'infini, le nombre de tours maximum de la partie a été fixé à 100");
-        logger.info("On va aussi te demander régulièrement si tu veux mettre fin à la partie DUEL.");
-        String OUI = "OUI";
-        do {
-            logger.info("\nOn commence par le mode Challenger.\n");
-            jeuchallenger.runJeu();
-            if (jeuchallenger.getVictoire() == 1) {
-                victoireDuel =1;
-            } else {
-                victoireDuel = 2;
-                logger.info("\nOn passe maintenant au mode Défenseur.\n");
-                jeudefenseur.runJeu();
-                if (jeudefenseur.getVictoire() == 2) {
-                    victoireDuel = 3;
-                } else {
-                    victoireDuel = 4;
-                }
+        tourPartie = 0;
+        combinaisonManuelle.getCombinaison().clear();
+        combinaisonsAuto.getCombinaison().clear();
+        combinaisonsAuto.getCombinaisonSecrete().clear();
+        combinaisonManuelle.getCombinaisonSecrete().clear();
+        combinaisonsParams.addNbCombinaisons();
+
+        logger.info("ROUND CHALLENGER");
+        combinaisonsAuto.setModeTirageAuto(5);
+        combinaisonsAuto.combiner();
+        if (jeuParams.getModeDeveloper().equals("OUI")) {
+            logger.info("\n(Combinaison secrete de la Machine :" + combinaisonsAuto.getCombinaison() + ")");
+        }
+        System.out.print("Votre proposition :    ");
+        combinaisonManuelle.setModeTirageManuel(2);
+        combinaisonManuelle.combiner();
+        playerMachine.comparerLesListes();
+
+        if (playerMachine.getVictoire() == 1) {
+            victoireDuel = 1;
+        } else if (playerMachine.getVictoire() == 2) {
+
+            logger.info("\nROUND DEFENSEUR");
+            System.out.print("Saisir votre combinaison secrète:  ");
+            combinaisonManuelle.setModeTirageManuel(1);
+            combinaisonManuelle.combiner();
+            combinaisonsAuto.setModeTirageAuto(1);
+            combinaisonsAuto.combiner();
+            combinaisonsAuto.printCombinaison();
+            playerJoueur.comparerLesListes();
+
+            if (playerJoueur.getVictoire() == 2) {
+                victoireDuel = 4;
+            } else if (playerJoueur.getVictoire() == 1) {
+                do {
+                    logger.info("\nNOUVEAU ROUND CHALLENGER");
+                    System.out.print("Votre proposition :    ");
+                    combinaisonManuelle.setModeTirageManuel(2);
+                    combinaisonManuelle.combiner();
+
+                    playerMachine.comparerLesListes();
+
+                    if (playerMachine.getVictoire() == 1) {
+                        victoireDuel = 1;
+                    } else if (playerMachine.getVictoire() == 2) {
+                        /*victoireDuel = 2;*/
+                        logger.info("\nNOUVEAU ROUND DEFENSEUR");
+                        playerMachine.lireComparaisonsListes();
+                        combinaisonsAuto.combiner();
+                        combinaisonsAuto.printCombinaison();
+                        playerJoueur.comparerLesListes();
+
+                        if (playerJoueur.getVictoire() == 2) {
+                            victoireDuel = 4;
+                            /*logger.info("Bravo. Tu t'es bien défendu.");*/
+                        } else if (playerJoueur.getVictoire() == 1) {
+                            victoireDuel = 3;
+                            /*logger.info("Désolé. Le Player Machine a été plus fort que toi.");*/
+                        }
+                    }
+                }while (victoireDuel == 2 || victoireDuel == 3) ;
             }
-            logger.info("Si tu veux continuer à jouer cette partie de DUEL, réponds OUI : ");
-            Scanner sc = new Scanner(System.in);
-            try {
-                ready1 = sc.nextLine();
-            } catch (InputMismatchException e) {
-                logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
-                sc.next();
-                ready1 = sc.nextLine();
-            }
-        }while(ready1.equals(OUI));
-        logger.info("Tu as décidé de mettre fin à cette partie en mode Duel. C'est noté.");
-        victoireDuel = 5;
+        }
     }
 }
 
