@@ -53,32 +53,65 @@ public class CombinaisonManuelle extends Combinaisons{
                 while (this.combinaisonSecrete.size() < combinaisonsParams.getNbCombinaisons()) {
                     int tabs[] = null;
                     Scanner scs = new Scanner(System.in);
-                    /*System.out.print("\nProposition :");*/
                     String x = scs.nextLine();
+                    try {
+                        int xi = Integer.parseInt(x);
+                    } catch (NumberFormatException e) {
+                        logger.error("FORMAT DES VALEURS SAISIES = INCORRECT.");
+                        x = null;
+                        System.out.print("VOTRE COMBINAISON SECRETE :    ");
+                        this.combiner();
+                        break;
+                    }
                     tabs = new int[x.length()];
 
                     for (int i = 0; i < tabs.length; i++) {
                         tabs[i] = x.charAt(i) - '0';
                         this.combinaisonSecrete.add(tabs[i]);
                     }
+                    if (x.length()!=combinaisonsParams.getNbCombinaisons()) {
+                        logger.error("TAILlE DE LA COMBINAISON PROPOSEE = INCORRECTE.");
+                        this.combinaisonSecrete.clear();
+                        x = null;
+                        System.out.print("VOTRE PROPOSITION :    ");
+                        this.combiner();
+                        break;
+                    }
                 }
-                break;
+            break;
             case 2:
                 while (this.combinaison.size() < combinaisonsParams.getNbCombinaisons()) {
                     int tab[] = null;
                     Scanner sc = new Scanner(System.in);
-                    /*System.out.print("\nProposition :");*/
-                    String x = sc.nextLine();
+                    String x = null;
+                    x = sc.nextLine();
+                    try {
+                        int xi = Integer.parseInt(x);
+                    } catch (NumberFormatException e) {
+                        logger.error("FORMAT DES VALEURS SAISIES = INCORRECT.");
+                        x = null;
+                        System.out.print("VOTRE PROPOSITION :    ");
+                        this.combiner();
+                        break;
+                    }
                     tab = new int[x.length()];
 
                     for (int i = 0; i < tab.length; i++) {
                         tab[i] = x.charAt(i) - '0';
                         this.combinaison.add(tab[i]);
                     }
+                    if (x.length()!=combinaisonsParams.getNbCombinaisons()) {
+                        logger.error("TAILlE DE LA COMBINAISON PROPOSEE = INCORRECTE.");
+                        this.combinaison.clear();
+                        x = null;
+                        System.out.print("VOTRE PROPOSITION :    ");
+                        this.combiner();
+                        break;
+                    }
                 }
-                break;
-                }
-            }
+            break;
+        }
+    }
 
 
     /**

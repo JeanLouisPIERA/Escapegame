@@ -45,7 +45,7 @@ public class JeuEscapegame implements Jeu {
                     }
                     break;
                 default:
-                    logger.info("Aucun de tes choix n'est le bon. GAME OVER");
+                    logger.info("SAISIE INCORRECTE. GAME OVER");
                     System.exit(1);
                     break;
             }

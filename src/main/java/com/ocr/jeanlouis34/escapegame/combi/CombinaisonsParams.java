@@ -40,11 +40,11 @@ public class CombinaisonsParams {
         } catch (final IOException ex) {
             logger.error(ex);
             Scanner sc = new Scanner(System.in).useDelimiter(" *");
-            logger.info(" Probleme dans l'utilisation du paramètre par défaut de longueur de la combinaison. Le joueur doit saisir ce paramètre");
+            logger.info(" PROBLEME POUR UTILISER LE PARAMETRE PAR DEFAUT DE LONGUEUR DE L COMBINAISON. LE JOUEUR DOIT SAISIR CE PARAMETRE.");
             try {
                 this.nbCombinaisons = sc.nextInt();
             } catch (InputMismatchException e) {
-                logger.error("La saisie n'est pas correcte. La longueur de la combinaison sera de 4 chiffres.");
+                logger.error("SAISIE INCORRECTE. LE PARAMETRE EST FIXE PAR DEFAUT A 4.");
                 nbCombinaisons = 4;
             }
         } finally {

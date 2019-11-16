@@ -66,17 +66,47 @@ public class PlayerJoueur implements Player {
      */
     public void comparerLesListes() {
         comparaisonsListes.clear();
+        int tricheur = 0;
         while (this.comparaisonsListes.size() < combinaisonsParams.getNbCombinaisons()) {
-            String x = " ";
             String tab[] = null;
-            System.out.print("    Réponse :   ");
+            String x = null;
+            System.out.print("    REPONSE :   ");
             Scanner sc = new Scanner(System.in);
             x = sc.nextLine();
             tab = new String[x.length()];
-            for (int i = 0; i < tab.length; i++) {
-                tab[i] = x.substring(i, i+1);
-                this.comparaisonsListes.add(tab[i]);
+            if (x.length() != combinaisonsParams.getNbCombinaisons()) {
+                logger.error("TAILlE DE LA COMBINAISON PROPOSEE = INCORRECTE.");
+                combinaisonsAuto.printCombinaison();
+                x = null;
+                this.comparerLesListes();
+            } else {
+                for (int i = 0; i < tab.length; i++) {
+                    tab[i] = x.substring(i, i + 1);
+                    int cm = (Integer) combinaisonManuelle.getCombinaisonSecrete().get(i);
+                    int ca = (Integer) combinaisonsAuto.getCombinaison().get(i);
+                    if (cm == ca && !tab[i].equals("=")) {
+                        tricheur = 1;
+                        (comparaisonsListes).add("=");
+                    } else if (cm < ca && !tab[i].equals("+")) {
+                        tricheur = 1;
+                        (comparaisonsListes).add("+");
+                    } else if (cm > ca && !tab[i].equals("-")) {
+                        (comparaisonsListes).add("-");
+                        tricheur = 1;
+                    } else {
+                        this.comparaisonsListes.add(tab[i]);
+                    }
+                }
             }
+        }
+        if (tricheur == 1) {
+            logger.info("ATTENTION AU TRICHEUR. LES SIGNES DE COMPARAISON SONT FAUX ET ONT ETE CORRIGES AUTOMATIQUEMENT.");
+            String withoutBrackets = comparaisonsListes.toString()
+                    .replace(",", "")  //remove the commas
+                    .replace("[", "")  //remove the right bracket
+                    .replace("]", "")  //remove the left bracket
+                    .trim();           //remove trailing spaces from partially initialized arrays
+            System.out.println(" --> REPONSE CORRECTE :    " + withoutBrackets + "   ");
         }
         printComparaisonsListes();
     }
@@ -87,6 +117,6 @@ public class PlayerJoueur implements Player {
                 victoire = 2;
             } else {
                 victoire = 1;
-            }
         }
     }
+}

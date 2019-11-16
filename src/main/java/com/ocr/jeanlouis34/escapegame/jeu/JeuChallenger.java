@@ -78,15 +78,14 @@ public class JeuChallenger implements Jeu {
         combinaisonsAuto.setModeTirageAuto(5);
         combinaisonsAuto.combiner();
         if (jeuParams.getModeDeveloper().equals("OUI")) {
-            logger.info("\n(Combinaison secrete :" + combinaisonsAuto.getCombinaison() + ")");
+            logger.info("\n(COMBINAISON SECRETE :" + combinaisonsAuto.getCombinaison() + ")");
         }
 
         do {
-            System.out.print("Votre proposition :    ");
+            System.out.print("VOTRE PROPOSITION :    ");
             combinaisonManuelle.setModeTirageManuel(2);
             combinaisonManuelle.combiner();
             playerMachine.comparerLesListes();
-            /*playerMachine.printComparaisonsListes();*/
             tourPartie++;
             if (playerMachine.getVictoire() == 1) {
                 victoire = 1;

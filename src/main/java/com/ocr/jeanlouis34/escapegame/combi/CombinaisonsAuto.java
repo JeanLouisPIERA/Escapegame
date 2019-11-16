@@ -139,7 +139,7 @@ public class CombinaisonsAuto extends Combinaisons {
                 .replace("[", "")  //remove the right bracket
                 .replace("]", "")  //remove the left bracket
                 .trim();           //remove trailing spaces from partially initialized arrays
-        System.out.print(" --> Proposition de la Machine :    " + withoutBrackets);
+        System.out.print(" --> PROPOSITION DE LA MACHINE :    " + withoutBrackets);
     }
 }
 

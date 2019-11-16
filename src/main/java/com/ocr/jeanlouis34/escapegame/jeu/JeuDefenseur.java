@@ -69,7 +69,7 @@ public class JeuDefenseur implements Jeu {
         combinaisonsAuto.getCombinaisonSecrete().clear();
         combinaisonManuelle.getCombinaisonSecrete().clear();
         combinaisonsParams.addNbCombinaisons();
-        System.out.print("Saisir votre combinaison secrète:  ");
+        System.out.print("SAISIR VOTRE COMBINAISON SECRETE :  ");
         combinaisonManuelle.setModeTirageManuel(1);
         combinaisonManuelle.combiner();
         combinaisonsAuto.setModeTirageAuto(1);

@@ -51,7 +51,7 @@ public class JeuParams {
         try {
             this.modeJeu = sc.nextInt();
         } catch (InputMismatchException ex) {
-            logger.error(" Saisie incorrecte.");
+            logger.error(" SAISIE INCORRECTE.");
             this.modeJeu = 0;
             sc.next();
             addModeJeu();
@@ -86,11 +86,11 @@ public class JeuParams {
         } catch (final IOException ex) {
             logger.error(ex);
             Scanner sc = new Scanner(System.in).useDelimiter(" *");
-            logger.info(" Probleme dans l'utilisation du paramètre par défaut du nombre de tours de la partie. Le joueur doit saisir ce paramètre");
+            logger.info(" PROBLEME POUR UTILISER LE PARAMETRE PAR DEFAUT DU NOMBRE DE TOURS DE LA PARTIE. LE JOUEUR DOIT SAISIR CE PARAMETRE.");
             try {
                 this.nbTours = sc.nextInt();
             } catch (InputMismatchException e) {
-                logger.error("Saisie incorrecte. La partie va se jouer en 2 Tours.");
+                logger.error("SAISIE INCORRECTE. LA PARTIE VA SE JOUER PAR DEFAUT EN 5 TOURS.");
                 nbTours = 2;
             }
         } finally {
@@ -108,7 +108,7 @@ public class JeuParams {
      * This is a sub-method of the method of this Class runModeJeu
      */
     public void displayAvailableModeJeu(){
-        logger.info ("\nPour choisir le mode de Jeu, taper 1 (CHALLENGER), 2(DEFENSEUR) ou 3 (DUEL) : ");
+        logger.info ("\nPOUR CHOISIR LE MODE DE JEU TAPER 1 (CHALLENGER), 2(DEFENSEUR) OU 3 (DUEL) : ");
     }
 
     public String getModeDeveloper() {
@@ -187,17 +187,17 @@ public class JeuParams {
      * This method enables to choose one more time between the three operative patterns.
      */
     public void finirlapartie() {
-        logger.info("\nLa partie est finie. Pour une nouvelle partie, taper OUI ");
-        String OUI = "OUI";
+        logger.info("\nPOUR JOUER UNE NOUVELLE PARTIE, TAPER OUI ");
         Scanner sc = new Scanner(System.in);
         try {
             ready = sc.nextLine();
         } catch (InputMismatchException e) {
-            logger.info("La saisie n'est pas correcte. Il faut recommencer ...");
+            logger.info("SAISIE INCORRECTE.");
             sc.next();
             ready = sc.nextLine();
         }
-        if (ready.equals(OUI)) {
+        if (ready.equals("OUI") || ready.equals("Oui") || ready.equals("oUi") || ready.equals("ouI") || ready.equals("oUI") || ready.equals("OUi") || ready.equals("oui")) {
+            ready = "OUI";
             runModeJeu();
             switch (modeJeu) {
                 case 1:
@@ -210,47 +210,13 @@ public class JeuParams {
                     choixJeu = 3;
                     break;
                 default:
-                    logger.info("Ne réponds pas n'importe quoi pour éviter le combat. Pour que tu comprennes bien, bis repetita ...");
+                    logger.info("SAISIE INCORRECTE.");
                     finirlapartie();
                     break;
             }
         } else {
-            logger.info("Tu as choisi de quitter l'application. J'espère te revoir bientôt et te souhaite une bonne journée ");
+            logger.info("FIN DE PARTIE.");
             System.exit(0);
-        }
-    }
-
-    public int getNbCombinaisons() {
-        return nbCombinaisons;
-    }
-
-    public void addNbCombinaisons() {
-        final Properties prop = new Properties();
-        InputStream input = null;
-        try {
-            input = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
-            // chargement du fichier properties
-            prop.load(input);
-            this.nbCombinaisons = Integer.parseInt(prop.getProperty("nbCombinaisonsByDefault"));
-            // récupération de la valeur de la propriété
-        } catch (final IOException ex) {
-            logger.error(ex);
-            Scanner sc = new Scanner(System.in).useDelimiter(" *");
-            logger.info(" Probleme dans l'utilisation du paramètre par défaut de longueur de la combinaison. Le joueur doit saisir ce paramètre");
-            try {
-                this.nbCombinaisons = sc.nextInt();
-            } catch (InputMismatchException e) {
-                logger.error("La saisie n'est pas correcte. La longueur de la combinaison sera de 4 chiffres.");
-                nbCombinaisons = 4;
-            }
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (final IOException e) {
-                    logger.error(e);
-                }
-            }
         }
     }
 }

@@ -74,9 +74,9 @@ public class JeuDuel implements Jeu {
         combinaisonsAuto.setModeTirageAuto(5);
         combinaisonsAuto.combiner();
         if (jeuParams.getModeDeveloper().equals("OUI")) {
-            logger.info("\n(Combinaison secrete de la Machine :" + combinaisonsAuto.getCombinaison() + ")");
+            logger.info("\n(COMBINAISON SECRETE DE LA MACHINE :" + combinaisonsAuto.getCombinaison() + ")");
         }
-        System.out.print("Votre proposition :    ");
+        System.out.print("VOTRE PROPOSITION :    ");
         combinaisonManuelle.setModeTirageManuel(2);
         combinaisonManuelle.combiner();
         playerMachine.comparerLesListes();
@@ -86,7 +86,7 @@ public class JeuDuel implements Jeu {
         } else if (playerMachine.getVictoire() == 2) {
 
             logger.info("\nROUND DEFENSEUR");
-            System.out.print("Saisir votre combinaison secrète:  ");
+            System.out.print("SAISIR VOTRE COMBINAISON SECRETE :  ");
             combinaisonManuelle.setModeTirageManuel(1);
             combinaisonManuelle.combiner();
             combinaisonsAuto.setModeTirageAuto(1);
@@ -99,7 +99,7 @@ public class JeuDuel implements Jeu {
             } else if (playerJoueur.getVictoire() == 1) {
                 do {
                     logger.info("\nNOUVEAU ROUND CHALLENGER");
-                    System.out.print("Votre proposition :    ");
+                    System.out.print("VOTRE PROPOSITION :    ");
                     combinaisonManuelle.setModeTirageManuel(2);
                     combinaisonManuelle.combiner();
 
@@ -108,7 +108,6 @@ public class JeuDuel implements Jeu {
                     if (playerMachine.getVictoire() == 1) {
                         victoireDuel = 1;
                     } else if (playerMachine.getVictoire() == 2) {
-                        /*victoireDuel = 2;*/
                         logger.info("\nNOUVEAU ROUND DEFENSEUR");
                         playerMachine.lireComparaisonsListes();
                         combinaisonsAuto.combiner();
@@ -117,10 +116,8 @@ public class JeuDuel implements Jeu {
 
                         if (playerJoueur.getVictoire() == 2) {
                             victoireDuel = 4;
-                            /*logger.info("Bravo. Tu t'es bien défendu.");*/
                         } else if (playerJoueur.getVictoire() == 1) {
                             victoireDuel = 3;
-                            /*logger.info("Désolé. Le Player Machine a été plus fort que toi.");*/
                         }
                     }
                 }while (victoireDuel == 2 || victoireDuel == 3) ;
