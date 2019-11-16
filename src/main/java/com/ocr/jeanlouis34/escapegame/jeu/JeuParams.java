@@ -51,7 +51,7 @@ public class JeuParams {
         try {
             this.modeJeu = sc.nextInt();
         } catch (InputMismatchException ex) {
-            logger.error("SAISIE INCORRECTE.");
+            logger.error("SAISIE INCORRECTE");
             this.modeJeu = 0;
             sc.next();
             displayAvailableModeJeu();
