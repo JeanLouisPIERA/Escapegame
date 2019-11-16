@@ -47,13 +47,14 @@ public class JeuParams {
      * If he writes a number greater than 10, only the first int is scanned.
      */
     public void addModeJeu () {
-        Scanner sc = new Scanner(System.in).useDelimiter(" *");
+        Scanner sc = new Scanner(System.in)/*.useDelimiter(" *")*/ ;
         try {
             this.modeJeu = sc.nextInt();
         } catch (InputMismatchException ex) {
-            logger.error(" SAISIE INCORRECTE.");
+            logger.error("SAISIE INCORRECTE.");
             this.modeJeu = 0;
             sc.next();
+            displayAvailableModeJeu();
             addModeJeu();
         }
     }
@@ -162,7 +163,7 @@ public class JeuParams {
                 nbTours = 100;
                 break;
             default:
-                logger.info("Erreur dans la saisie");
+                logger.info("SAISIE INCORRECTE.");
                 runModeJeu();
                 break;
         }
@@ -211,7 +212,7 @@ public class JeuParams {
                     break;
                 default:
                     logger.info("SAISIE INCORRECTE.");
-                    finirlapartie();
+                    addModeJeu();
                     break;
             }
         } else {
