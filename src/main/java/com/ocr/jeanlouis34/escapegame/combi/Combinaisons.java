@@ -16,8 +16,9 @@ import java.util.List;
  */
 public abstract class Combinaisons {
 
-
+    // this variable enables to register the combinaison (manual or automatic) as an arrayList
     protected List<Integer> combinaison;
+    // this variable enbales to register the secret combinaison (manual or automatic) as an arraylist
     protected List<Integer> combinaisonSecrete;
     protected CombinaisonsParams combinaisonsParams;
     static Logger logger = Logger.getLogger(Combinaisons.class);

@@ -18,9 +18,7 @@ import java.util.Scanner;
 /**
  * This class is the twin class of Player Machine.
  *
- * This class is only linked with the JeuDefenseur Class in the Defenseur pattern.
- *
- * This class enables to compare both automatically and handly made combinaisons.
+ * This class enables to manually compare both automatically and handly made combinaisons.
  *
  * That is why it uses the variables of all the classes about COMBINAISON.
  *
@@ -29,10 +27,14 @@ import java.util.Scanner;
 public class PlayerJoueur implements Player {
 
     static Logger logger = Logger.getLogger(PlayerJoueur.class);
+    // this variable enables to store the result of each round of the game
     private int victoire;
+    // this variable enables to recover and store the value of the automatic combinaison at the key k
     private int ca;
+    // this variable enables to recover and store the value of the manual combinaison at the key k
     private int cm;
     private String cr;
+    // this variable enables to store the comparison characters +,-,= of the manual comparison
     private List<String> comparaisonsListes;
     private CombinaisonsParams combinaisonsParams;
     private CombinaisonsAuto combinaisonsAuto;
@@ -101,6 +103,7 @@ public class PlayerJoueur implements Player {
         }
         if (tricheur == 1) {
             logger.info("ATTENTION AU TRICHEUR. LES SIGNES DE COMPARAISON SONT FAUX ET ONT ETE CORRIGES AUTOMATIQUEMENT.");
+            // this variable enables to print the values of an array list without brackets
             String withoutBrackets = comparaisonsListes.toString()
                     .replace(",", "")  //remove the commas
                     .replace("[", "")  //remove the right bracket

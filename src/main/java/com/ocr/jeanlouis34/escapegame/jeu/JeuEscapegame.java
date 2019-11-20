@@ -2,6 +2,16 @@ package com.ocr.jeanlouis34.escapegame.jeu;
 
 import org.apache.log4j.Logger;
 
+/**
+ * This class enables to launch the gme with at choice one of the 3 patterns of this game.
+ *
+ *  This class instances objects and methods of some Classes :
+ *  * CombinaisonsParams and JeuParams about predefined parameters bu default which define the game characteristics,
+ *  * PlayerJoueur about its method used by the human player to manuallyally compare both automatic and manual combinaisons,
+ *  * PlayerMachine about its method used by the Machine to automatically compare both automatic and manual combinaisons,
+ *  * Combinaisons, CombinaisonsAuto and CombinaisonManuelle about the size of the combinaisons and the methods to combine automatically and not
+ */
+
 public class JeuEscapegame implements Jeu {
 
     private JeuParams jeuParams;

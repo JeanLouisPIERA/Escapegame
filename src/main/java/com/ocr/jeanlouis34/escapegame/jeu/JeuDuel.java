@@ -17,19 +17,20 @@ import java.util.Scanner;
  * In the Duel pattern, both other patterns are played each one after the other, beginning with the Challenge pattern
  *  *
  * This Class enables to run as many loops as the number of rounds and to return the value of both victoireJoueur and victoireJoueurDef
- *
- * This class instances objects and methods of some Classes :
- * JeuBegin about the game characteristics,
- * PlayerJoueur about its method to handly compare both automatic and manual combinaisons,
- * Combinaisons, CombinaisonsAuto and CombinaisonManuelle about the size of the combinaisons and the methods to combine automatically and not
- *
- * This class objects are instanced only in class JeuDuel.
- * This clazs is one of the 5 classes of the first range (see javadoc of the Class JeuBegin) are invoked in the Class main.
- */
+
+ *  This class instances objects and methods of some Classes :
+ *  * CombinaisonsParams and JeuParams about predefined parameters bu default which define the game characteristics,
+ *  * PlayerJoueur about its method used by the human player to manuallyally compare both automatic and manual combinaisons,
+ *  * PlayerMachine about its method used by the Machine to automatically compare both automatic and manual combinaisons,
+ *  * Combinaisons, CombinaisonsAuto and CombinaisonManuelle about the size of the combinaisons and the methods to combine automatically and not
+*/
+
 public class JeuDuel implements Jeu {
 
     private String ready1;
+    // this variable enables to store the result of each round of the game
     private int victoireDuel;
+    // this variable enables to count and register the number of rounds that have been played in the game
     private int tourPartie;
     private JeuParams jeuParams = new JeuParams();
     private CombinaisonsParams combinaisonsParams = new CombinaisonsParams();
@@ -58,8 +59,6 @@ public class JeuDuel implements Jeu {
      * This method is the lone method of this class
      * It theorically enables to do an infinite run of loops (although limited at 100 ...) in which alternate one round of JeuChallenger pattern and one round of JeuDefenseur pattern until one of them displays the victory signal.
      * <p>
-     * A the end of each loop, the player is asked if he wants to break the run of this pattern
-     * in this case, he can move back to the Main Menu and choose if he wants to play one of the another patterns.
      */
     @Override
     public void runJeu() {

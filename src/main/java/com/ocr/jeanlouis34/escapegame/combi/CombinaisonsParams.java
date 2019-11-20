@@ -7,9 +7,14 @@ import java.util.InputMismatchException;
 import java.util.Properties;
 import java.util.Scanner;
 
+/**
+ * This Class enables to recover and store the predefined parameter in the properties file about the length of combinaisons
+ */
+
 public class CombinaisonsParams {
 
     static Logger logger = Logger.getLogger(CombinaisonsParams.class);
+    // this variable enables to recover the parameter which is predifined in the properties file
     private int nbCombinaisons;
 
     public CombinaisonsParams() {
@@ -30,13 +35,12 @@ public class CombinaisonsParams {
      */
     public void addNbCombinaisons() {
         final Properties prop = new Properties();
+        // this variable enables to store the value of the parameter by default that define the length of the combinaisons
         InputStream input = null;
         try {
             input = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
-            // chargement du fichier properties
             prop.load(input);
             this.nbCombinaisons = Integer.parseInt(prop.getProperty("nbCombinaisonsByDefault"));
-            // récupération de la valeur de la propriété
         } catch (final IOException ex) {
             logger.error(ex);
             Scanner sc = new Scanner(System.in).useDelimiter(" *");

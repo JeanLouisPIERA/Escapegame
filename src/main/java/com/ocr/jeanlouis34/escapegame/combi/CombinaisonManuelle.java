@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class CombinaisonManuelle extends Combinaisons{
 
     static Logger logger = Logger.getLogger(CombinaisonManuelle.class);
+    // this variable enables to define if the method combiner complete the array combinaison or the array combinaisonSecrete
     private int modeTirageManuel;
 
     public CombinaisonManuelle(CombinaisonsParams combinaisonsParams) { super(combinaisonsParams); this.modeTirageManuel=0;
@@ -51,10 +52,12 @@ public class CombinaisonManuelle extends Combinaisons{
         switch (modeTirageManuel) {
             case 1:
                 while (this.combinaisonSecrete.size() < combinaisonsParams.getNbCombinaisons()) {
+                    // this local variable enables to register the console input as a chained list
                     int tabs[] = null;
                     Scanner scs = new Scanner(System.in);
                     String x = scs.nextLine();
                     try {
+                        // this local variable is introduced to catch the NumberFormatException
                         int xi = Integer.parseInt(x);
                     } catch (NumberFormatException e) {
                         logger.error("FORMAT DES VALEURS SAISIES = INCORRECT.");
@@ -81,11 +84,13 @@ public class CombinaisonManuelle extends Combinaisons{
             break;
             case 2:
                 while (this.combinaison.size() < combinaisonsParams.getNbCombinaisons()) {
+                    // this local variable enables to register the console input as a chained list
                     int tab[] = null;
                     Scanner sc = new Scanner(System.in);
                     String x = null;
                     x = sc.nextLine();
                     try {
+                        // this local variable is introduced to catch the NumberFormatException
                         int xi = Integer.parseInt(x);
                     } catch (NumberFormatException e) {
                         logger.error("FORMAT DES VALEURS SAISIES = INCORRECT.");
@@ -116,7 +121,6 @@ public class CombinaisonManuelle extends Combinaisons{
 
     /**
      * This method enables to print the combinaison obtained by the method combiner.
-     * It is identically shared by all the subclasses Combinaisons.
      */
     @Override
     public void printCombinaison() {

@@ -18,13 +18,23 @@ import java.util.Random;
 public class CombinaisonsAuto extends Combinaisons {
 
     static Logger logger = Logger.getLogger(CombinaisonsAuto.class);
+    // this variable enables to define if the method combiner complete the array combinaison or the array combinaisonSecrete
     private int modeTirageAuto;
-    private int ca;// variable représentant la valeur actuelle de la combinaison actuelle au niveau de la clé k
-    private int nca; // variable représentant la nouvelle valeur de la combinaison automatique au niveau de la clé k
-    int min = 0; // variable représentant la borne inférieure de l'approximation itérative
-    int max = 9; // variable représentant la borne supérieure de l'approximation itérative
+    // this variable represents the current value of the current automatic combinaison registered at the key k
+    private int ca;
+    // this variable represents the new value of the automatic combinaison registered at the key k
+    private int nca;
+    // this variable represents the lower bound of the iterative approximation
+    private int min = 0;
+    // this variable represents the upper bound of the iterative approximation
+    private int max = 9;
+    // this variable enbales to register the lower bounds of the iterative approximation at its key k in a combinaison in an arraylist
     private List<Integer> combinaisonMin;
+    // this variable enbales to register the upper bounds of the iterative approximation at its key k in a combinaison in an arraylist
     private List<Integer> combinaisonMax;
+    /* during the iterative approximation, this variable enbales to register in an arrayList at the same k key
+    the int value which corresponds to the converted value of the equivalent comparison character
+    in the comparison combinaison created by the human player during the previous round*/
     private List<Integer> combinaisonModeTirageAuto;
 
 
@@ -129,7 +139,7 @@ public class CombinaisonsAuto extends Combinaisons {
 
     /**
      * This method enables to print the combinaison obtained by the method combiner.
-     * It is identically shared by all the subclasses Combinaisons.
+     * It is modified comparing with the one in the super class.
      */
 
     @Override

@@ -15,19 +15,20 @@ import org.apache.log4j.Logger;
  * This Class enables to run as many loops as the number of rounds and to return the value of victoireJoueurDef
  * The variable victoireJoueurDef says if the Human Player has won that is if the Player Machine has not been able to find out the combinaison defined by the Huùan Player
  *
- * This class instances objects and methods of some Classes :
- * JeuBegin about the game characteristics,
- * PlayerJoueur about its method to handly compare both automatic and manual combinaisons,
- * Combinaisons, CombinaisonsAuto and CombinaisonManuelle about the size of the combinaisons and the methods to combine automatically and not
- *
- * This class objects are instanced only in class JeuDuel.
- * This class is one of the 5 classes of the first range (see javadoc of the Class JeuBegin)are invoked in the Class main.
- */
+ *  This class instances objects and methods of some Classes :
+ *  * CombinaisonsParams and JeuParams about predefined parameters bu default which define the game characteristics,
+ *  * PlayerJoueur about its method used by the human player to manuallyally compare both automatic and manual combinaisons,
+ *  * PlayerMachine about its method used by the Machine to automatically compare both automatic and manual combinaisons,
+ *  * Combinaisons, CombinaisonsAuto and CombinaisonManuelle about the size of the combinaisons and the methods to combine automatically and not
+ *  */
+
 public class JeuDefenseur implements Jeu {
 
+    // this variable enables to store the result of each round of the game
     private int victoire;
+    // this variable enables to count and register the number of rounds that have been played in the game
     private int tourPartie;
-    private JeuParams jeuParams = new JeuParams();
+    private JeuParams jeuParams;
     private CombinaisonsParams combinaisonsParams = new CombinaisonsParams();
     private CombinaisonsAuto combinaisonsAuto = new CombinaisonsAuto(combinaisonsParams);
     private CombinaisonManuelle combinaisonManuelle = new CombinaisonManuelle(combinaisonsParams);

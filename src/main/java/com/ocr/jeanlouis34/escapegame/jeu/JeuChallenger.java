@@ -17,19 +17,18 @@ import org.apache.log4j.Logger;
  * The variable victoireJoueur says if the Human Player has won that is if he had found out the combinaison automatically defined by the Machine
  *
  * This class instances objects and methods of some Classes :
- *  * JeuBegin about the game characteristics,
+ *  * CombinaisonsParams and JeuParams about predefined parameters bu default which define the game characteristics,
+ *  * PlayerJoueur about its method used by the human player to manuallyally compare both automatic and manual combinaisons,
  *  * PlayerMachine about its method used by the Machine to automatically compare both automatic and manual combinaisons,
  *  * Combinaisons, CombinaisonsAuto and CombinaisonManuelle about the size of the combinaisons and the methods to combine automatically and not
- *  *
- *
- * This class objects are instanced only in class JeuDuel.
- * This class is one of the 5 classes of the first range (see javadoc of the Class JeuBegin) are invoked in the Class main.
  */
 public class JeuChallenger implements Jeu {
 
+    // this variable enables to store the result of each round of the game
     private int victoire;
+    // this variable enables to count and register the number of rounds that have been played in the game
     private int tourPartie;
-    private JeuParams jeuParams = new JeuParams();
+    private JeuParams jeuParams;
     private CombinaisonsParams combinaisonsParams = new CombinaisonsParams();
     private CombinaisonsAuto combinaisonsAuto = new CombinaisonsAuto(combinaisonsParams);
     private CombinaisonManuelle combinaisonManuelle = new CombinaisonManuelle(combinaisonsParams);

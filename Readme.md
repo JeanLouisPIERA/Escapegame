@@ -14,7 +14,12 @@
     Cursus to be validated.
     Practically, this program aims to enable a human player known as the Player Joueur to play an escape game against the computer
     known as the Player Machine.
-    A secret code of several numbers has to be found by the Player who attacks, the human or the mchine.
+    A secret code of several numbers has to be found by the Player who attacks, the human or the machine.
+    The opponent (either human or automatic) has to indicate for each number of the combinaison if it is +,- or =.
+    The PlayerMachine when it attacks is able to interpret the result of the comparison of its opponent and to adapt its
+    next combinaison from it through a DICHOTOMIA ALGORITHM.
+    The program is as well able to denounce the human player when he cheats by returning his comparison : and in
+    this case the program give a corrected indication to the Player Machine.
 
     ## Technologies
     Project is written in Java and created with
@@ -75,7 +80,7 @@
 
     ## Detailed descriprion of Packages
     * This Program is built and divided in 3 packages :
-        ** the first one : the Combinaisons package called combi. It is framed by an interface that defines 2 abstracts methods :
+        ** the first one : the Combinaisons package called Combinaisons. It is framed by an superclass that defines 2 abstracts methods :
         tirer & combiner and a method print as well.
         2 classes override these methods :
             *** the CombinaisonManuelle class enables the Human Player to define his secret combinaison by answering the computer's

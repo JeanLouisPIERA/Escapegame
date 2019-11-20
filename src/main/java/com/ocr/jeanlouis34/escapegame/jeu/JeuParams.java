@@ -7,33 +7,43 @@ import java.util.InputMismatchException;
 import java.util.Properties;
 import java.util.Scanner;
 
+/**
+ * This Class enables to recover and store the predefined parameters in the properties file
+ * *about the number of rounds of the patterns Challenger and Defenseur
+ * about the mode developer that is with or without displaying the secrete combinaisons
+ *
+ * This Class enables as well to define the value of the variables that enables to end the game through
+ * a dedicated method
+ */
+
 public class JeuParams {
 
+    //This variable enables to register the number of the choosen game pattern
     private int modeJeu;
+    // this variable enables to recover the predefined parameter by default about the number of rounds
     private int nbTours;
+    // this variable enables to register the decision to pursue the game
     private String ready;
+    // this variable enables to register the decision to pursue the game
     private int choixJeu;
-    private int victoire;
-    private int tourPartie;
-    private String ready1;
+    /* this variable enables to recover the predefined parameter by default
+    about the mode : Developer/Not Developer
+    */
     private String modeDeveloper;
+    // this variable enables to recover the predefined parameter by default about the length of combinaisons
     private int nbCombinaisons;
     static Logger logger = Logger.getLogger(JeuParams.class);
 
     public JeuParams() {
-        this(0 ,0,"",0,0,0,"","", 0);
+        this(0 ,0,"",0,"");
     }
 
-    public JeuParams(int modeJeu, int nbTours, String ready, int choixJeu, int victoire, int tourPartie, String ready1, String modeDeveloper, int nbCombinaisons) {
+    public JeuParams(int modeJeu, int nbTours, String ready, int choixJeu, String modeDeveloper) {
         this.modeJeu = modeJeu;
         this.nbTours = nbTours;
         this.ready = ready;
         this.choixJeu = choixJeu;
-        this.victoire = victoire;
-        this.tourPartie = tourPartie;
-        this.ready1 = ready1;
         this.modeDeveloper = modeDeveloper;
-        this.nbCombinaisons = nbCombinaisons;
     }
 
     public int getModeJeu() { return modeJeu;
@@ -63,10 +73,6 @@ public class JeuParams {
         return nbTours;
     }
 
-    public void setNbTours(int nbTours) {
-        this.nbTours = nbTours;
-    }
-
     /**
      * This method enables to define the number of rounds for each of both patterns JeuChallenger and JeuDefenseur
      * The pattern JeuDuel is not intended
@@ -80,10 +86,8 @@ public class JeuParams {
         InputStream input = null;
         try {
             input = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
-            // chargement du fichier properties
             prop.load(input);
             this.nbTours= Integer.parseInt(prop.getProperty("nbToursByDefault"));
-            // récupération de la valeur de la propriété
         } catch (final IOException ex) {
             logger.error(ex);
             Scanner sc = new Scanner(System.in).useDelimiter(" *");
@@ -124,10 +128,8 @@ public class JeuParams {
         InputStream input = null;
         try {
             input = Thread.currentThread().getContextClassLoader().getResourceAsStream("configuration.properties");
-            // chargement du fichier properties
             prop.load(input);
             this.modeDeveloper = prop.getProperty("modeDeveloperByDefault");
-            // récupération de la valeur de la propriété
         } catch (final IOException ex) {
             logger.error(ex);
             this.modeDeveloper = "NON";
