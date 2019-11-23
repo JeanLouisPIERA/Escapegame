@@ -61,6 +61,9 @@ public class CombinaisonManuelle extends Combinaisons{
                         int xi = Integer.parseInt(x);
                     } catch (NumberFormatException e) {
                         logger.error("FORMAT DES VALEURS SAISIES = INCORRECT.");
+                        if (x.length() != combinaisonsParams.getNbCombinaisons()) {
+                            logger.error("ET TAILLE DE LA COMBINAISON PROPOSEE = INCORRECTE.LA TAILLE EST DE " + combinaisonsParams.getNbCombinaisons() + " CARACTERES.");
+                        }
                         x = null;
                         System.out.print("VOTRE COMBINAISON SECRETE :    ");
                         this.combiner();
@@ -73,7 +76,7 @@ public class CombinaisonManuelle extends Combinaisons{
                         this.combinaisonSecrete.add(tabs[i]);
                     }
                     if (x.length()!=combinaisonsParams.getNbCombinaisons()) {
-                        logger.error("TAILlE DE LA COMBINAISON PROPOSEE = INCORRECTE.");
+                        logger.error("TAILLE DE LA COMBINAISON PROPOSEE = INCORRECTE. LA TAILLE EST DE " + combinaisonsParams.getNbCombinaisons() + " CARACTERES. ");
                         this.combinaisonSecrete.clear();
                         x = null;
                         System.out.print("VOTRE PROPOSITION :    ");
@@ -94,6 +97,9 @@ public class CombinaisonManuelle extends Combinaisons{
                         int xi = Integer.parseInt(x);
                     } catch (NumberFormatException e) {
                         logger.error("FORMAT DES VALEURS SAISIES = INCORRECT.");
+                        if (x.length() != combinaisonsParams.getNbCombinaisons()) {
+                            logger.error("ET TAILLE DE LA COMBINAISON PROPOSEE = INCORRECTE.LA TAILLE EST DE " + combinaisonsParams.getNbCombinaisons() + " CARACTERES.");
+                        }
                         x = null;
                         System.out.print("VOTRE PROPOSITION :    ");
                         this.combiner();
@@ -106,7 +112,7 @@ public class CombinaisonManuelle extends Combinaisons{
                         this.combinaison.add(tab[i]);
                     }
                     if (x.length()!=combinaisonsParams.getNbCombinaisons()) {
-                        logger.error("TAILlE DE LA COMBINAISON PROPOSEE = INCORRECTE.");
+                        logger.error("TAILLE DE LA COMBINAISON PROPOSEE = INCORRECTE. LA TAILLE EST DE " + combinaisonsParams.getNbCombinaisons() + " CARACTERES. ");
                         this.combinaison.clear();
                         x = null;
                         System.out.print("VOTRE PROPOSITION :    ");

@@ -22,7 +22,7 @@ import java.util.Scanner;
  *
  * That is why it uses the variables of all the classes about COMBINAISON.
  *
- * WARNING : I have introduced a overrated level which enables to detect if the Human Player have cheated.
+ * WARNING : I have introduced a overrated level which enables to detect if the Human Player has cheated.
  */
 public class PlayerJoueur implements Player {
 
@@ -38,10 +38,10 @@ public class PlayerJoueur implements Player {
     private List<String> comparaisonsListes;
     private CombinaisonsParams combinaisonsParams;
     private CombinaisonsAuto combinaisonsAuto;
-    private CombinaisonManuelle combinaisonManuelle ;
+    private CombinaisonManuelle combinaisonManuelle;
 
     public PlayerJoueur(CombinaisonsParams combinaisonsParams, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
-        this(0,0,0,"",new ArrayList<>(),combinaisonsParams, combinaisonsAuto, combinaisonManuelle);
+        this(0, 0, 0, "", new ArrayList<>(), combinaisonsParams, combinaisonsAuto, combinaisonManuelle);
     }
 
     public PlayerJoueur(int victoire, int ca, int cm, String cr, List<String> comparaisonsListes, CombinaisonsParams combinaisonsParams, CombinaisonsAuto combinaisonsAuto, CombinaisonManuelle combinaisonManuelle) {
@@ -70,49 +70,93 @@ public class PlayerJoueur implements Player {
         comparaisonsListes.clear();
         int tricheur = 0;
         while (this.comparaisonsListes.size() < combinaisonsParams.getNbCombinaisons()) {
-            String tab[] = null;
+            // this variable enables to store each value of the comparison written on the screen
+            String tab [] = null;
+            // this variable enables to recover each value of the comparison written on the screen
             String x = null;
+            // this variable enable to validate the correct type of the value written on the console screen
+            int contenu = 0;
             System.out.print("    REPONSE :   ");
             Scanner sc = new Scanner(System.in);
-            x = sc.nextLine();
-            tab = new String[x.length()];
+            try {
+                x = sc.nextLine();
+            } catch (InputMismatchException e) {
+                logger.error("PROBLEME ENREGISTREMENT DE LA SAISIE.");
+                combinaisonsAuto.printCombinaison();
+                x = null;
+                comparerLesListes();
+            }
+            try {
+                tab = new String[x.length()];
+            } catch (Exception e) {
+                logger.error("NullPointerException");
+                x = null;
+                comparerLesListes();
+            }
             if (x.length() != combinaisonsParams.getNbCombinaisons()) {
-                logger.error("TAILlE DE LA COMBINAISON PROPOSEE = INCORRECTE.");
+                logger.error("TAILLE DE LA COMBINAISON PROPOSEE = INCORRECTE.LA TAILLE EST DE " + combinaisonsParams.getNbCombinaisons() + " CARACTERES.");
+                for (int i = 0; i < tab.length; i++) {
+                    tab[i] = x.substring(i, i + 1);
+                    if (!tab[i].equals("=") && !tab[i].equals("+") && !tab[i].equals("-")) {
+                        contenu = 1;
+                        break;
+                    }
+                }
+                if (contenu == 1) {
+                    logger.error("ET CONTENU DES VALEURS SAISIES = INCORRECT. (SEULS SIGNES AUTORISES + - ou =)");
+                    combinaisonsAuto.printCombinaison();
+                    x = null;
+                    this.comparerLesListes();
+                    break;
+                }
                 combinaisonsAuto.printCombinaison();
                 x = null;
                 this.comparerLesListes();
             } else {
                 for (int i = 0; i < tab.length; i++) {
                     tab[i] = x.substring(i, i + 1);
-                    int cm = (Integer) combinaisonManuelle.getCombinaisonSecrete().get(i);
-                    int ca = (Integer) combinaisonsAuto.getCombinaison().get(i);
-                    if (cm == ca && !tab[i].equals("=")) {
-                        tricheur = 1;
-                        (comparaisonsListes).add("=");
-                    } else if (cm < ca && !tab[i].equals("+")) {
-                        tricheur = 1;
-                        (comparaisonsListes).add("+");
-                    } else if (cm > ca && !tab[i].equals("-")) {
-                        (comparaisonsListes).add("-");
-                        tricheur = 1;
-                    } else {
-                        this.comparaisonsListes.add(tab[i]);
+                    if (!tab[i].equals("=") && !tab[i].equals("+") && !tab[i].equals("-")) {
+                        contenu = 2;
+                        break;
                     }
+                }
+                if (contenu == 2) {
+                    logger.error("CONTENU DES VALEURS SAISIES = INCORRECT. (SEULS SIGNES AUTORISES + - ou =)");
+                    combinaisonsAuto.printCombinaison();
+                    x = null;
+                    this.comparerLesListes();
+                    break;
+                } else {
+                for (int i = 0; i < tab.length; i++) {
+                    // this variable enables to recover the value "minimum" of the previous round to perform the alogoritm's running
+                    int cmin = (Integer) combinaisonsAuto.getCombinaisonMin().get(i);
+                    // this variable enables to recover the value "maximum" of the previous round to perform the alogoritm's running
+                    int cmax = (Integer) combinaisonsAuto.getCombinaisonMax().get(i);
+                    int ca = (Integer) combinaisonsAuto.getCombinaison().get(i);
+                    if (cmax - cmin <= 2 && ca == (cmax + cmin) / 2 && !tab[i].equals("=")) tricheur = 1;
+                    if (ca != 0 && ca != 1 && ca - cmin <= 1 & tab[i].equals("-")) tricheur = 1;
+                    if (ca != 9 && cmax - ca <= 1 & tab[i].equals("+")) tricheur = 1;
+                    if (ca == 9 && tab[i].equals("-")) tricheur = 2;
+                    if (ca == 0 && tab[i].equals("+")) tricheur = 3;
+                    this.comparaisonsListes.add(tab[i]);
+                    }
+                }
+                if (tricheur == 1) {
+                    logger.info("FIN DE PARTIE : LES COMPARAISONS PRECEDEMMENT FOURNIES A LA MACHINE ETAIENT FAUSSES.");
+                    victoire = 2;
+                } else if (tricheur == 2) {
+                    victoire = 2;
+                    logger.info("FIN DE PARTIE : LES COMPARAISONS PRECEDEMMENT FOURNIES A LA MACHINE ETAIENT FAUSSES. AUCUH CHIFFRE DE LA COMBINAISON NE PEUT ETRE SUPERIEUR A 9.");
+                } else if (tricheur == 3) {
+                    victoire = 2;
+                    logger.info("FIN DE PARTIE : LES COMPARAISONS PRECEDEMMENT FOURNIES A LA MACHINE ETAIENT FAUSSES.AUCUN CHIFFRE DE LA COMBINAISON NE PEUT ETRE INFERIEUR A ZERO.");
+                } else {
+                    printComparaisonsListes();
                 }
             }
         }
-        if (tricheur == 1) {
-            logger.info("ATTENTION AU TRICHEUR. LES SIGNES DE COMPARAISON SONT FAUX ET ONT ETE CORRIGES AUTOMATIQUEMENT.");
-            // this variable enables to print the values of an array list without brackets
-            String withoutBrackets = comparaisonsListes.toString()
-                    .replace(",", "")  //remove the commas
-                    .replace("[", "")  //remove the right bracket
-                    .replace("]", "")  //remove the left bracket
-                    .trim();           //remove trailing spaces from partially initialized arrays
-            System.out.println(" --> REPONSE CORRECTE :    " + withoutBrackets + "   ");
-        }
-        printComparaisonsListes();
     }
+
 
         public void printComparaisonsListes(){
             if (combinaisonManuelle.getCombinaisonSecrete().equals(combinaisonsAuto.getCombinaison())) {

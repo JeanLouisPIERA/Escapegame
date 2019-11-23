@@ -69,6 +69,9 @@ public class JeuDefenseur implements Jeu {
         combinaisonsAuto.getCombinaison().clear();
         combinaisonsAuto.getCombinaisonSecrete().clear();
         combinaisonManuelle.getCombinaisonSecrete().clear();
+        combinaisonsAuto.getCombinaisonMin().clear();
+        combinaisonsAuto.getCombinaisonMax().clear();
+        combinaisonsAuto.getCombinaisonModeTirageAuto().clear();
         combinaisonsParams.addNbCombinaisons();
         System.out.print("SAISIR VOTRE COMBINAISON SECRETE :  ");
         combinaisonManuelle.setModeTirageManuel(1);
@@ -77,19 +80,23 @@ public class JeuDefenseur implements Jeu {
         combinaisonsAuto.combiner();
         combinaisonsAuto.printCombinaison();
         playerJoueur.comparerLesListes();
-        do {
-            tourPartie++;
-            playerMachine.lireComparaisonsListes();
-            combinaisonsAuto.combiner();
-            combinaisonsAuto.printCombinaison();
-            playerJoueur.comparerLesListes();
-            if (playerJoueur.getVictoire() == 1) {
-                victoire = 1;
-            } else if (playerJoueur.getVictoire() == 2) {
-                victoire = 2;
+        if (playerJoueur.getVictoire() == 2) {
+            victoire = 2;
+        } else if (playerJoueur.getVictoire() == 1) {
+            victoire = 1;
+            while (victoire == 1 && tourPartie < jeuParams.getNbTours()) {
+                tourPartie++;
+                playerMachine.lireComparaisonsListes();
+                combinaisonsAuto.combiner();
+                combinaisonsAuto.printCombinaison();
+                playerJoueur.comparerLesListes();
+                if (playerJoueur.getVictoire() == 1) {
+                    victoire = 1;
+                } else if (playerJoueur.getVictoire() == 2) {
+                    victoire = 2;
+                }
             }
         }
-        while (victoire == 1 && tourPartie < jeuParams.getNbTours());
     }
 }
 

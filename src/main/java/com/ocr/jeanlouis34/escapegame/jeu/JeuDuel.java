@@ -67,6 +67,10 @@ public class JeuDuel implements Jeu {
         combinaisonsAuto.getCombinaison().clear();
         combinaisonsAuto.getCombinaisonSecrete().clear();
         combinaisonManuelle.getCombinaisonSecrete().clear();
+        combinaisonsAuto.getCombinaisonMin().clear();
+        combinaisonsAuto.getCombinaisonMax().clear();
+        combinaisonsAuto.getCombinaisonModeTirageAuto().clear();
+
         combinaisonsParams.addNbCombinaisons();
 
         logger.info("ROUND CHALLENGER");
@@ -90,6 +94,7 @@ public class JeuDuel implements Jeu {
             combinaisonManuelle.combiner();
             combinaisonsAuto.setModeTirageAuto(1);
             combinaisonsAuto.combiner();
+
             combinaisonsAuto.printCombinaison();
             playerJoueur.comparerLesListes();
 

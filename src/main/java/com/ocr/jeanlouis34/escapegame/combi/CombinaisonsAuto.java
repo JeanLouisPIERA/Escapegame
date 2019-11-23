@@ -28,6 +28,8 @@ public class CombinaisonsAuto extends Combinaisons {
     private int min = 0;
     // this variable represents the upper bound of the iterative approximation
     private int max = 9;
+    // this variable enables to extract the values of the combinaison
+    private String withoutBrackets = "";
     // this variable enbales to register the lower bounds of the iterative approximation at its key k in a combinaison in an arraylist
     private List<Integer> combinaisonMin;
     // this variable enbales to register the upper bounds of the iterative approximation at its key k in a combinaison in an arraylist
