@@ -76,9 +76,15 @@ public class JeuDuel implements Jeu {
         logger.info("ROUND CHALLENGER");
         combinaisonsAuto.setModeTirageAuto(5);
         combinaisonsAuto.combiner();
-        if (jeuParams.getModeDeveloper().equals("OUI")) {
-            logger.info("\n(COMBINAISON SECRETE DE LA MACHINE :" + combinaisonsAuto.getCombinaison() + ")");
+        if (jeuParams.getModeDeveloper().equals("OUI") || jeuParams.getModeDeveloper().equals("Oui") || jeuParams.getModeDeveloper().equals("oui")) {
+            String withoutBrackets = combinaisonsAuto.getCombinaisonSecrete().toString()
+                    .replace(",", "")  //remove the commas
+                    .replace("[", "")  //remove the right bracket
+                    .replace("]", "")  //remove the left bracket
+                    .trim();           //remove trailing spaces from partially initialized arrays
+            logger.info("\n( COMBINAISON SECRETE : " +  withoutBrackets + " )");
         }
+
         System.out.print("VOTRE PROPOSITION :    ");
         combinaisonManuelle.setModeTirageManuel(2);
         combinaisonManuelle.combiner();
