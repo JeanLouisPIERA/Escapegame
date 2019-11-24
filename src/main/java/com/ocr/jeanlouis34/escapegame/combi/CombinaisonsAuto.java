@@ -20,6 +20,8 @@ public class CombinaisonsAuto extends Combinaisons {
     static Logger logger = Logger.getLogger(CombinaisonsAuto.class);
     // this variable enables to define if the method combiner complete the array combinaison or the array combinaisonSecrete
     private int modeTirageAuto;
+    // this variable enables to use the appropriate mode for displaying the automatic combinaisons
+    private int modeDisplayAuto;
     // this variable represents the current value of the current automatic combinaison registered at the key k
     private int ca;
     // this variable represents the new value of the automatic combinaison registered at the key k
@@ -28,8 +30,6 @@ public class CombinaisonsAuto extends Combinaisons {
     private int min = 0;
     // this variable represents the upper bound of the iterative approximation
     private int max = 9;
-    // this variable enables to extract the values of the combinaison
-    private String withoutBrackets = "";
     // this variable enbales to register the lower bounds of the iterative approximation at its key k in a combinaison in an arraylist
     private List<Integer> combinaisonMin;
     // this variable enbales to register the upper bounds of the iterative approximation at its key k in a combinaison in an arraylist
@@ -43,6 +43,7 @@ public class CombinaisonsAuto extends Combinaisons {
     public CombinaisonsAuto(CombinaisonsParams combinaisonsParams) {
         super(combinaisonsParams);
         this.modeTirageAuto = 0;
+        this.modeDisplayAuto = 0;
         this.ca = 1;
         this.nca = 1;
         this.min = 0;
@@ -53,9 +54,10 @@ public class CombinaisonsAuto extends Combinaisons {
 
     }
 
-    public CombinaisonsAuto(List<Integer> combinaison, List<Integer> combinaisonSecrete, CombinaisonsParams combinaisonsParams, int modeTirageAuto, int ca, int nca, int min, int max, List<Integer> combinaisonMin, List<Integer> combinaisonMax, List<Integer> combinaisonModeTirageAuto) {
+    public CombinaisonsAuto(List<Integer> combinaison, List<Integer> combinaisonSecrete, CombinaisonsParams combinaisonsParams, int modeTirageAuto, int modeDisplayAuto, int ca, int nca, int min, int max, List<Integer> combinaisonMin, List<Integer> combinaisonMax, List<Integer> combinaisonModeTirageAuto) {
         super(combinaison, combinaisonSecrete, combinaisonsParams);
         this.modeTirageAuto = modeTirageAuto;
+        this.modeDisplayAuto = modeDisplayAuto;
         this.ca = ca;
         this.nca = nca;
         this.min = min;
@@ -90,6 +92,10 @@ public class CombinaisonsAuto extends Combinaisons {
         for (int k = 0; k < combinaisonsParams.getNbCombinaisons(); k++) {
             (combinaisonModeTirageAuto).add(modeTirageAuto);
         }
+    }
+
+    public void setModeDisplayAuto(int modeDisplayAuto) {
+        this.modeDisplayAuto = modeDisplayAuto;
     }
 
     /**
@@ -146,12 +152,21 @@ public class CombinaisonsAuto extends Combinaisons {
 
     @Override
     public void printCombinaison() {
+        if (modeDisplayAuto ==1) {
+        String withoutBrackets = combinaisonSecrete.toString()
+                .replace(",", "")  //remove the commas
+                .replace("[", "")  //remove the right bracket
+                .replace("]", "")  //remove the left bracket
+                .trim();           //remove trailing spaces from partially initialized arrays
+        logger.info("( COMBINAISON SECRETE : " +  withoutBrackets + " )");
+        } else {
         String withoutBrackets = combinaison.toString()
                 .replace(",", "")  //remove the commas
                 .replace("[", "")  //remove the right bracket
                 .replace("]", "")  //remove the left bracket
                 .trim();           //remove trailing spaces from partially initialized arrays
         System.out.print(" --> PROPOSITION DE LA MACHINE :    " + withoutBrackets);
+        }
     }
 }
 
